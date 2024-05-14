@@ -13,7 +13,11 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/app/*": ["./src/components/layouts/app/*"],
+      "@/methods/*": ["./src/lib/sdk/methods/*"],
+      "@/layouts/*": ["./src/components/layouts/*"],
+      "@/sdk/*": ["./src/lib/sdk/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

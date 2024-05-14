@@ -1,0 +1,31 @@
+export interface ProductThumbnailModel {
+  id: number;
+  product_id: number;
+  url: string;
+  s3_key: string;
+  s3_location: string;
+  isThumbnail: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ProductModel {
+  id: number;
+  title: string;
+  SKU: string;
+  description: string;
+  price: number;
+  stock: number;
+  created_at: string;
+  thumbnailUrl: string;
+  thumbnail: ProductThumbnailModel[];
+  updated_at: string;
+}
+
+export interface CreateProductModel {
+  title: string;
+  SKU: string;
+  description: string;
+  price: number;
+  stock: number;
+}
