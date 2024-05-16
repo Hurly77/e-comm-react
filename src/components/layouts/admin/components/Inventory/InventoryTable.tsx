@@ -28,55 +28,65 @@ const INVENTORY_TABLE_COLUMNS = [
 ];
 
 export default function InventoryTable() {
-  const { inventory, isLoading } = useInventory();
+  const inventoryCtx = useInventory();
+  const { inventory, isLoading } = inventoryCtx;
 
-  function TableActions() {
-    return (
-      <div className="flex gap-x-2">
-        <Tooltip content="Edit Product">
-          <PencilIcon className="cursor-pointer stroke-secondary h-5 w-5" />
-        </Tooltip>
+  const renderCell = React.useCallback(
+    (item: ProductModel, colKey: React.Key) => {
+      function TableActions({ item }: { item: ProductModel }) {
+        return (
+          <div className="flex gap-x-2">
+            <Tooltip content="Edit Product">
+              <PencilIcon className="cursor-pointer stroke-secondary h-5 w-5" />
+            </Tooltip>
 
-        <Tooltip content="Delete Product">
-          <TrashIcon className="cursor-pointer stroke-danger h-5 w-5" />
-        </Tooltip>
-      </div>
-    );
-  }
+            <Tooltip content="Delete Product">
+              <TrashIcon
+                onClick={() => {
+                  console.log("Delete Product");
+                  inventoryCtx.delete(item);
+                }}
+                className="cursor-pointer stroke-danger h-5 w-5"
+              />
+            </Tooltip>
+          </div>
+        );
+      }
 
-  const renderCell = React.useCallback((item: ProductModel, colKey: React.Key) => {
-    const value = item[colKey as keyof ProductModel];
-    switch (colKey) {
-      case "title":
-        return item.title;
-      case "SKU":
-        return item.SKU;
-      case "description":
-        return item.description;
-      case "price":
-        return Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(item.price);
-      case "stock":
-        return item.stock;
-      case "created_at":
-      case "updated_at":
-        // the case will only be created_at or updated_at
-        // so we can safely cast the value to string
-        return Intl.DateTimeFormat("en-US").format(new Date(value as string));
-      case "actions":
-        return <TableActions />;
-      case "thumbnailUrl":
-        return <Image src={item.thumbnailUrl} alt={item.title} width={50} height={50} />;
+      const value = item[colKey as keyof ProductModel];
+      switch (colKey) {
+        case "title":
+          return item.title;
+        case "SKU":
+          return item.SKU;
+        case "description":
+          return item.description;
+        case "price":
+          return Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(item.price);
+        case "stock":
+          return item.stock;
+        case "created_at":
+        case "updated_at":
+          // the case will only be created_at or updated_at
+          // so we can safely cast the value to string
+          return Intl.DateTimeFormat("en-US").format(new Date(value as string));
+        case "actions":
+          return <TableActions item={item} />;
+        case "thumbnailUrl":
+          return <Image src={item.thumbnailUrl} alt={item.title} width={50} height={50} />;
 
-      default:
-        return "";
-    }
-  }, []);
+        default:
+          return "";
+      }
+    },
+    [inventoryCtx]
+  );
 
   return (
-    <div className="w-full grow border gap-y-1 flex flex-col">
+    <div className="w-full grow gap-y-1 flex flex-col">
       <div className="w-full flex justify-end">
         <InventoryNewProduct />
       </div>

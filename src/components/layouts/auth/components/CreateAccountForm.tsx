@@ -38,6 +38,7 @@ export default function CreateAccountForm({ isAdmin }: { isAdmin: boolean }) {
     const { password, confirm_password, ...payload } = credentials;
 
     const { error } = passwordSignupSchema.validate({ ...payload, password });
+    console.log(error);
 
     // Joi validation
     if (password !== confirm_password) {

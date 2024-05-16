@@ -1,12 +1,8 @@
-import useSWR from "swr";
-import { getProducts as method, GET_PRODUCTS } from "@/lib/sdk/methods";
+import { InventoryContext } from "../context/InventoryContext";
+import React from "react";
 
 export default function useInventory() {
-  const { data, error, isLoading } = useSWR(GET_PRODUCTS, method);
+  const ctx = React.useContext(InventoryContext);
 
-  return {
-    inventory: data,
-    isLoading: !error && !data,
-    isError: error,
-  };
+  return ctx;
 }

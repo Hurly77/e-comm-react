@@ -1,10 +1,6 @@
 import InventoryTable from "../components/Inventory/InventoryTable";
+import Inventory from "../components/Inventory/Inventory";
 
 export function AdminDashboardPage() {
-  return (
-    <div className="page flex-col px-10">
-      <h1>Admin Dashboard</h1>
-      <InventoryTable />
-    </div>
-  );
+  return <Inventory />;
 }

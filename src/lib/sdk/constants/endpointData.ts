@@ -26,5 +26,6 @@ export const ADMIN_EPS = {
   put: {},
   delete: {
     logout: "auth/logout",
+    product: "product/:id",
   },
 };
