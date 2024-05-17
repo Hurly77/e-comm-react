@@ -5,7 +5,7 @@ import React from "react";
 import useSession from "@/components/layouts/app/hooks/useSession";
 
 import { NAV_LINKS } from "../../constants/nav";
-import { MagnifyingGlassIcon, UserCircleIcon, UserIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, ShoppingCartIcon, UserCircleIcon, UserIcon } from "@heroicons/react/24/outline";
 
 export default function Navigation() {
   const router = useRouter();
@@ -54,6 +54,11 @@ export default function Navigation() {
         <NavbarItem>
           <Button radius="sm" className="border-none text-md hover:text-medium" variant="light" onClick={handleLogout}>
             <AccountIcon />
+          </Button>
+        </NavbarItem>
+        <NavbarItem>
+          <Button radius="sm" className="border-none text-md hover:text-medium" variant="light">
+            <ShoppingCartIcon className="h-6 w-6" />
           </Button>
         </NavbarItem>
       </NavbarContent>
