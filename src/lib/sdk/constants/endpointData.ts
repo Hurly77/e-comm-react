@@ -1,6 +1,7 @@
 export const COMMERCE_EPS = {
   get: {
     products: "product",
+    categories: "category",
   },
   post: {
     login: "auth/login",

@@ -8,6 +8,7 @@ import {
   Tooltip,
   Spinner,
   Image,
+  Pagination,
 } from "@nextui-org/react";
 import useInventory from "../../hooks/useInventory";
 import { ProductModel } from "@/lib/sdk/models/ProductModel";
@@ -21,6 +22,7 @@ const INVENTORY_TABLE_COLUMNS = [
   { uid: "SKU", name: "SKU" },
   { uid: "description", name: "Description" },
   { uid: "price", name: "Price" },
+  { uid: "category", name: "Category" },
   { uid: "stock", name: "Total In Stock" },
   { uid: "created_at", name: "Created On" },
   { uid: "updated_at", name: "Last Updated" },
@@ -30,6 +32,9 @@ const INVENTORY_TABLE_COLUMNS = [
 export default function InventoryTable() {
   const inventoryCtx = useInventory();
   const { inventory, isLoading } = inventoryCtx;
+  const [page, setPage] = React.useState<number>(1);
+  const perPage = 15;
+  const pages = Math.ceil((inventory?.length ?? 1) / perPage);
 
   const renderCell = React.useCallback(
     (item: ProductModel, colKey: React.Key) => {
@@ -61,6 +66,8 @@ export default function InventoryTable() {
           return item.SKU;
         case "description":
           return item.description;
+        case "category":
+          return item.category?.name;
         case "price":
           return Intl.NumberFormat("en-US", {
             style: "currency",
@@ -90,13 +97,26 @@ export default function InventoryTable() {
       <div className="w-full flex justify-end">
         <InventoryNewProduct />
       </div>
-      <Table radius="sm">
+      <Table
+        radius="sm"
+        isHeaderSticky
+        bottomContent={<Pagination className="w-fit" total={pages} page={page} onChange={(p) => setPage(p)} />}
+        classNames={{
+          base: "",
+          wrapper: "max-h-[75vh] overflow-y-auto",
+        }}
+        bottomContentPlacement="outside"
+      >
         <TableHeader columns={INVENTORY_TABLE_COLUMNS}>
           {(col) => {
             return <TableColumn key={col.uid}>{col.name}</TableColumn>;
           }}
         </TableHeader>
-        <TableBody items={inventory ?? []} isLoading={isLoading} loadingContent={<Spinner />}>
+        <TableBody
+          items={(inventory ?? []).slice(page * perPage - perPage, page * perPage)}
+          isLoading={isLoading}
+          loadingContent={<Spinner />}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(colKey) => <TableCell key={colKey}>{renderCell(item, colKey)}</TableCell>}

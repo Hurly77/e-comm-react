@@ -1,12 +1,12 @@
-import { Balthazar } from 'next/font/google';
-import React from 'react';
+import { Balthazar } from "next/font/google";
+import React from "react";
 
-import { classNames } from '../helpers/twind-helpers';
+import { cls } from "../helpers/twind-helpers";
 
 const balthazar = Balthazar({
-  weight: ['400'],
-  subsets: ['latin'],
-  variable: '--font-balthazar',
+  weight: ["400"],
+  subsets: ["latin"],
+  variable: "--font-balthazar",
 });
 
 export type AppContextProviderT = {
@@ -23,7 +23,7 @@ export type AppContextT = {
 export const AppContext = React.createContext({} as AppContextT);
 
 export default function AppContextProvider({ children }: AppContextProviderT) {
-  const [theme, setTheme] = React.useState('light');
+  const [theme, setTheme] = React.useState("light");
   const [appLoading, setAppLoading] = React.useState(false);
 
   const LOADING_TIMEOUT_MS = 10000; // 10 seconds
@@ -39,13 +39,13 @@ export default function AppContextProvider({ children }: AppContextProviderT) {
   }
 
   function changeTheme(theme: string) {
-    localStorage.setItem('theme', theme);
+    localStorage.setItem("theme", theme);
     setTheme(theme);
   }
 
   React.useEffect(() => {
-    if (typeof localStorage !== 'undefined') {
-      setTheme(localStorage.getItem('theme') || 'light');
+    if (typeof localStorage !== "undefined") {
+      setTheme(localStorage.getItem("theme") || "light");
     }
   }, []);
 
@@ -58,9 +58,7 @@ export default function AppContextProvider({ children }: AppContextProviderT) {
 
   return (
     <AppContext.Provider value={value}>
-      <div className={classNames(theme, 'app', balthazar.variable)}>
-        {children}
-      </div>
+      <div className={cls(theme, "app", balthazar.variable)}>{children}</div>
     </AppContext.Provider>
   );
 }
