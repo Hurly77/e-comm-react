@@ -1,7 +1,13 @@
 import { CategoryModel } from "@/lib/sdk/models/CategoryModel";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
-export default function CategoriesBreadCrumb({ category }: { category?: CategoryModel }) {
+export default function CategoriesBreadCrumb({
+  category,
+  size,
+}: {
+  size?: "sm" | "md" | "lg";
+  category?: CategoryModel;
+}) {
   const getCrumbs = (category: CategoryModel) => {
     const crumbs = [];
     let current: CategoryModel | null = category;
@@ -15,8 +21,8 @@ export default function CategoriesBreadCrumb({ category }: { category?: Category
   if (!category) return null;
 
   return (
-    <Breadcrumbs size="lg">
-      <BreadcrumbItem href="/">Main</BreadcrumbItem>
+    <Breadcrumbs size={size ?? "lg"}>
+      <BreadcrumbItem href="/">E-Shop</BreadcrumbItem>
       {getCrumbs(category).map((category) => (
         <BreadcrumbItem key={category.id} href={`/categories/${category.id}`}>
           {category.name}

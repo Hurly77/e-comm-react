@@ -18,6 +18,7 @@ export interface ProductModel {
   description: string;
   price: number;
   regularPrice: number;
+  purchaseLimit: number;
   specs: Record<string, string>;
   highlights: string[];
   stock: number;

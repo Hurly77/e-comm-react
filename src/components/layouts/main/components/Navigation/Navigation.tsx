@@ -9,6 +9,7 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  Image,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import React from "react";
@@ -61,7 +62,11 @@ export default function Navigation() {
   return (
     <Navbar maxWidth="2xl" className="shadow sticky top-0">
       <NavbarContent justify="start">
-        {/* <NavbarBrand>Cameron</NavbarBrand> */}
+        <NavbarItem>
+          <Button variant="light" isIconOnly onPress={() => router.push("/")}>
+            <Image src="/images/logo.png" alt="logo" width={50} height={50} />
+          </Button>
+        </NavbarItem>
         <NavbarItem>
           <Dropdown isOpen={isOpen} onOpenChange={(open) => setIsOpen(open)} radius="sm" size="sm" classNames={{}}>
             <DropdownTrigger>
@@ -108,7 +113,12 @@ export default function Navigation() {
         </NavbarItem>
         <NavbarItem>
           <Button radius="sm" className="border-none text-md hover:text-medium" variant="light">
-            <ShoppingCartIcon className="h-6 w-6" />
+            <ShoppingCartIcon
+              onClick={() => {
+                router.push("/cart");
+              }}
+              className="h-6 w-6"
+            />
           </Button>
         </NavbarItem>
       </NavbarContent>

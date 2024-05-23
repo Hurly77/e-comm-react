@@ -2,19 +2,13 @@ import { cls } from "@/components/layouts/app/helpers/twind-helpers";
 import { ProductModel } from "@/lib/sdk/models/ProductModel";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { Button, Card, CardBody, CardFooter, CardHeader, Image, Link } from "@nextui-org/react";
-import { default as NextImage } from "next/image";
+import { toUSD } from "../../helpers/number";
 import React from "react";
 
 interface ProductCardT {
   size?: "sm" | "md" | "lg";
   product: ProductModel;
 }
-
-const toUSD = (price: number) =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(price);
 
 export default function ProductCard({ product, size }: ProductCardT) {
   const [favorite, setFavorite] = React.useState<boolean>(false);
