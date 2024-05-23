@@ -6,6 +6,7 @@ import {
   DropdownTrigger,
   Input,
   Navbar,
+  NavbarBrand,
   NavbarContent,
   NavbarItem,
 } from "@nextui-org/react";
@@ -24,11 +25,12 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import useCategories from "../../hooks/useCategories";
+import { cls } from "@/components/layouts/app/helpers/twind-helpers";
 
 export default function Navigation() {
   const router = useRouter();
   const sessionCtx = useSession();
-  const [isMouseOver, setIsMouseOver] = React.useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const { categories } = useCategories();
 
@@ -54,25 +56,27 @@ export default function Navigation() {
   return (
     <Navbar maxWidth="2xl" className="shadow sticky top-0">
       <NavbarContent justify="start">
+        {/* <NavbarBrand>Cameron</NavbarBrand> */}
         <NavbarItem>
-          <Dropdown>
+          <Dropdown isOpen={isOpen} onOpenChange={(open) => setIsOpen(open)} radius="sm" size="sm" classNames={{}}>
             <DropdownTrigger>
-              <Button radius="sm" variant="light">
+              <Button radius="sm" variant="light" className="font-medium text-medium group gap-1">
                 Categories
-                <motion.div
-                  className="hidden group-hover:block transition-all"
-                  initial={{ y: 0 }}
-                  animate={{
-                    y: 0,
-                  }}
-                >
-                  <ChevronDownIcon className="h-5 w-5" />
-                </motion.div>
+                <span className="opacity-0 transform -translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                  <ChevronDownIcon className={cls("h-4 w-4 transition-transform", isOpen ? "rotate-180" : "")} />
+                </span>{" "}
               </Button>
             </DropdownTrigger>
             <DropdownMenu>
               {(categories ?? []).map(({ id, name }) => (
-                <DropdownItem key={id} onClick={() => router.push(`/categories/${id}`)}>
+                <DropdownItem
+                  color="primary"
+                  variant="light"
+                  className="border-b last:border-none text-xl"
+                  href={`/categories/${id}`}
+                  key={id}
+                  // onClick={() => router.push(`/categories/${id}`)}
+                >
                   {name}
                 </DropdownItem>
               ))}
@@ -82,12 +86,7 @@ export default function Navigation() {
 
         {NAV_LINKS.map(({ key, href, title }) => (
           <NavbarItem key={key}>
-            <Button
-              radius="sm"
-              className="border-none font-medium text-medium"
-              variant="light"
-              onClick={() => router.push(href)}
-            >
+            <Button radius="sm" className="font-medium text-medium" variant="light" onClick={() => router.push(href)}>
               {title}
             </Button>
           </NavbarItem>

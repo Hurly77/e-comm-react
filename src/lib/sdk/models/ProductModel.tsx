@@ -1,3 +1,5 @@
+import { CategoryModel } from "./CategoryModel";
+
 export interface ProductThumbnailModel {
   id: number;
   product_id: number;
@@ -15,17 +17,16 @@ export interface ProductModel {
   SKU: string;
   description: string;
   price: number;
+  regularPrice: number;
+  specs: Record<string, string>;
+  highlights: string[];
   stock: number;
   created_at: string;
   thumbnailUrl: string;
   thumbnail: ProductThumbnailModel[];
   updated_at: string;
-  category: {
-    id: number;
-    name: string;
-    created_at: string;
-    updated_at: string;
-  };
+  images: ProductThumbnailModel[];
+  category: CategoryModel;
 }
 
 export interface CreateProductModel {

@@ -15,4 +15,9 @@
   .page {
     @apply p-4 flex max-w-full overflow-y-auto grow bg-background;
   }
+
+  .hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
 }

@@ -1,44 +1,76 @@
 import { cls } from "@/components/layouts/app/helpers/twind-helpers";
 import { ProductModel } from "@/lib/sdk/models/ProductModel";
 import { HeartIcon } from "@heroicons/react/24/solid";
-import { Button, Card, CardBody, CardFooter, CardHeader, Image } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Image, Link } from "@nextui-org/react";
 import { default as NextImage } from "next/image";
 import React from "react";
 
-export default function ProductCard({ product }: { product: ProductModel }) {
+interface ProductCardT {
+  size?: "sm" | "md" | "lg";
+  product: ProductModel;
+}
+
+const toUSD = (price: number) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(price);
+
+export default function ProductCard({ product, size }: ProductCardT) {
   const [favorite, setFavorite] = React.useState<boolean>(false);
+  const { title, thumbnailUrl, price, regularPrice } = product;
+  const isDeal = product.regularPrice > 0;
 
   return (
-    <Card radius="sm" className="grow">
-      <CardHeader className="flex justify-center">
-        {" "}
-        <Image
-          as={NextImage}
-          radius="sm"
-          width={308}
-          height={308}
-          src={product.thumbnailUrl}
-          fallbackSrc="https://via.placeholder.com/308x308"
-          alt="NextUI Image with fallback"
-          objectFit="contain"
-          classNames={{
-            wrapper: "border border-black w-full",
-            img: "w-full",
-          }}
-          style={{
-            objectFit: "cover",
-          }}
-        />
+    <Card
+      shadow="sm"
+      radius="sm"
+      className={cls(size == "sm" ? "w-fit min-w-32 xl:min-w-44" : "grow")}
+      classNames={{
+        base: "px-0",
+        header: "p-2",
+      }}
+    >
+      <CardHeader className="flex flex-col">
+        <div className="flex justify-center  w-full">
+          <Image
+            radius="sm"
+            width={size === "sm" ? 190 : 308}
+            height={size === "sm" ? 180 : 308}
+            src={thumbnailUrl ?? ""}
+            alt="NextUI Image with fallback"
+            classNames={{
+              wrapper: "w-full",
+              img: "w-full",
+            }}
+            style={{
+              objectFit: "cover",
+            }}
+          />
+        </div>
+        <div className="flex flex-col items-start w-full">
+          <span className={cls("w-full font-medium pt-1 pl-1", isDeal ? "pl-2 line-through text-foreground-400" : "")}>
+            {toUSD(price)} {}
+          </span>
+          {isDeal && <span className={cls("text-danger font-bold")}>{isDeal ? toUSD(regularPrice) : ""}</span>}
+        </div>
       </CardHeader>
-      <CardBody>
+      <CardBody className="px-3">
         <div>
           <section className="flex justify-between">
-            <h2 className="text-lg font-medium">{product.title}</h2>
+            <Link
+              color="foreground"
+              underline="hover"
+              href={`/products/${product.id}`}
+              className={cls(size === "sm" ? "overflow-hidden max-h-16 max-w-44 text-sm " : "text-lg font-medium")}
+            >
+              <span className="truncate-lines line-clamp-2">{product.title}</span>
+            </Link>
             <Button
               onPress={() => setFavorite(!favorite)}
               isIconOnly
               radius="full"
-              className="border border-divider"
+              className={cls("border border-divider", size === "sm" ? "hidden" : "")}
               variant="light"
             >
               <HeartIcon
@@ -52,7 +84,9 @@ export default function ProductCard({ product }: { product: ProductModel }) {
         </div>
       </CardBody>
       <CardFooter>
-        <Button color="primary">Add to cart</Button>
+        <Button size="sm" radius="sm" color={"primary"} className={cls(size === "sm" ? "w-full" : "")}>
+          Add to cart
+        </Button>
       </CardFooter>
     </Card>
   );

@@ -2,6 +2,9 @@ export const COMMERCE_EPS = {
   get: {
     products: "product",
     categories: "category",
+    category_id: "category/children/:id",
+    product_id: "product/:id",
+    product_by_category_id: "product/category/:id",
   },
   post: {
     login: "auth/login",

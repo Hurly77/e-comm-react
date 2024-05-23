@@ -2,8 +2,16 @@ import { ProductModel } from "../models/ProductModel";
 import { ecommApi } from "../utility/apis";
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
-export async function getProducts() {
-  const response = await ecommApi.get<ProductModel[]>("products");
+type ProductFilters = {
+  take?: number;
+  skip?: number;
+  deals?: boolean;
+};
+
+export async function getProducts(filters: ProductFilters = {}) {
+  const response = await ecommApi.get<ProductModel[]>("products", {
+    params: { ...filters, deals: true },
+  });
 
   console.log(response);
 
