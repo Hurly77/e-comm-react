@@ -37,7 +37,12 @@ export default function Navigation() {
   function AccountIcon() {
     const session = sessionCtx.session;
     if (session) {
-      <UserIcon className="h-6 w-6" />;
+      return (
+        <div className="flex items-center gap-x-2">
+          <span>{session?.user.first_name}</span>
+          <UserCircleIcon className="h-6 w-6" />
+        </div>
+      );
     } else {
       return (
         <div className="flex items-center gap-x-2">
@@ -49,7 +54,7 @@ export default function Navigation() {
   }
 
   function handleLogout() {
-    sessionCtx.logout();
+    // sessionCtx.logout();
     router.push("/auth/login");
   }
 
@@ -75,7 +80,6 @@ export default function Navigation() {
                   className="border-b last:border-none text-xl"
                   href={`/categories/${id}`}
                   key={id}
-                  // onClick={() => router.push(`/categories/${id}`)}
                 >
                   {name}
                 </DropdownItem>

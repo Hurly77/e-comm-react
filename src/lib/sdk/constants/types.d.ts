@@ -11,7 +11,8 @@ declare type AuthToken = {
 declare type AuthUser = {
   id: string;
   email: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   role: AuthUserRole;
   googleId: null;
   provider: string;

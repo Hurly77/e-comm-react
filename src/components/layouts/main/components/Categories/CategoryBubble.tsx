@@ -1,6 +1,5 @@
 import { CategoryModel } from "@/lib/sdk/models/CategoryModel";
 import { Image, Link } from "@nextui-org/react";
-import { default as NextImage } from "next/image";
 
 interface CategoryBubbleT {
   category: CategoryModel;
@@ -22,7 +21,6 @@ export default function CategoryBubble(props: CategoryBubbleT) {
       >
         {category.imgURL ? (
           <Image
-            as={NextImage}
             height={176}
             width={176}
             src={category?.imgURL}

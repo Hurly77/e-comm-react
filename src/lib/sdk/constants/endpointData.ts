@@ -9,22 +9,10 @@ export const COMMERCE_EPS = {
   post: {
     login: "auth/login",
     signup: "auth/register",
-  },
-  patch: {},
-  put: {},
-  delete: {
-    logout: "auth/logout",
-  },
-};
-
-export const ADMIN_EPS = {
-  get: {
+    admin_login: "auth/admin/login",
+    admin_signup: "auth/admin/register",
+    // products: "product",
     products: "product",
-  },
-  post: {
-    products: "product",
-    login: "auth/admin/login",
-    signup: "auth/admin/register",
   },
   patch: {},
   put: {},

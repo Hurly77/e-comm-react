@@ -21,7 +21,7 @@ export default function LoginForm({ isAdmin }: { isAdmin: boolean }) {
     e.preventDefault();
     let isLogin = false;
     if (isAdmin) {
-      isLogin = await auth.admin.login({ ...credentials, role: isAdmin ? "admin" : "customer" });
+      isLogin = await auth.login({ ...credentials, role: isAdmin ? "admin" : "customer" });
     } else {
       isLogin = await auth.login({ ...credentials, role: isAdmin ? "admin" : "customer" });
     }
@@ -68,7 +68,7 @@ export default function LoginForm({ isAdmin }: { isAdmin: boolean }) {
       </div>
 
       <div className="flex justify-between w-full">
-        <Button onClick={() => router.push(isAdmin ? "/auth/admin/create-account" : "auth/create-account")}>
+        <Button onClick={() => router.push(isAdmin ? "/auth/admin/create-account" : "/auth/create-account")}>
           Create New
         </Button>
         <Button type="submit">Login</Button>

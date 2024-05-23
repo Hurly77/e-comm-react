@@ -62,7 +62,7 @@ export default function CreateAccountForm({ isAdmin }: { isAdmin: boolean }) {
     };
 
     if (isAdmin) {
-      auth.admin.signUp(signupPayload);
+      auth.signUp(signupPayload);
     } else {
       auth.signUp(signupPayload);
     }

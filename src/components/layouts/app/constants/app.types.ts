@@ -5,10 +5,4 @@ export type SessionContextT = {
   login: (payload: AuthLogin) => Promise<boolean>;
   logout: () => Promise<void>;
   signUp: (payload: AuthSignup) => Promise<void>;
-  admin: {
-    session: AuthSession | null;
-    login: (payload: AuthLogin) => Promise<boolean>;
-    logout: () => Promise<void>;
-    signUp: (payload: AuthSignup) => Promise<void>;
-  };
 };

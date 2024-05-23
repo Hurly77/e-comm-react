@@ -1,5 +1,5 @@
 import { ApiService } from "./api-client";
-import { ecommApi, ecommAdminApi } from "./apis";
+import { ecommApi } from "./apis";
 
 type AuthError = {
   message: string | string[];
@@ -71,5 +71,4 @@ export function AuthClient<ApiClient extends AuthApi>(API: ApiClient) {
   return { login, signUp, logout, setSession, getSession };
 }
 
-export const customerAuth = AuthClient(ecommApi);
-export const adminAuth = AuthClient(ecommAdminApi);
+export const auth = AuthClient(ecommApi);

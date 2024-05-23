@@ -1,8 +1,8 @@
 import { ProductModel } from "../models/ProductModel";
-import { ecommAdminApi } from "../utility/apis";
+import { ecommApi } from "../utility/apis";
 
 export async function createProduct(payload: FormData) {
-  const response = await ecommAdminApi.post<ProductModel>("products", payload);
+  const response = await ecommApi.post<ProductModel>("products", payload);
 
   console.log(response);
 
