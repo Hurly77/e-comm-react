@@ -51,7 +51,6 @@ export default function SessionContextProvider({ children }: SessionContextProvi
   React.useEffect(() => {
     const checkSession = async () => {
       const authSession = await auth.getSession();
-      console.log("AuthSession: ", authSession);
       if (!authSession && session) setSession(null);
       if (authSession && !session) setSession(authSession);
 
@@ -79,8 +78,6 @@ export default function SessionContextProvider({ children }: SessionContextProvi
     if (loginPathAndSession && isAdminRoute) router.push("/admin/dashboard");
     if (loginPathAndSession && acceptedRoutes.includes(router.pathname)) router.push("/");
   }, [isValidating, router, session]);
-
-  console.log("Session isValidating: ", isValidating);
 
   const value: SessionContextT = {
     login,

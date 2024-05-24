@@ -5,9 +5,7 @@ import CategoriesBreadCrumb from "../components/Categories/CategoriesBreadCrumb"
 import ProductList from "../components/Product/ProductList";
 
 export default function CategoryPage({ id }: { id: string | number }) {
-  const { category, isLoading, error } = useCategory(id);
-
-  console.log({ category, isLoading, error });
+  const { category } = useCategory(id);
 
   return (
     <div>

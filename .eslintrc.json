@@ -1,3 +1,27 @@
 {
-  "extends": "next/core-web-vitals"
+  "globals": {
+    "JSX": true
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "next",
+    "eslint:recommended",
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "next/core-web-vitals"
+  ],
+  "rules": {
+    "no-console": 1,
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
+    "no-irregular-whitespace": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "error"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  }
 }

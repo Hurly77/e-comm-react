@@ -36,10 +36,7 @@ export default function InventoryImageUploader(props: {
       Promise.all(fileReaders).then(() => {
         const newImages = imageUrls.filter((url) => !images.includes(url));
         setImages([...images, ...newImages]);
-        console.log(imageUrls);
       });
-
-      // e.target.value = "";
     }
   }
   return (

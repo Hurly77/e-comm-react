@@ -1,4 +1,5 @@
 import React from "react";
+import { createCartItem } from "@/lib/sdk/methods";
 
 export const MainContext = React.createContext({});
 

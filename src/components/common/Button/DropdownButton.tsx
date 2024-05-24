@@ -6,7 +6,7 @@ export interface DropdownButtonT {
   text: string;
 }
 
-export default function DropdownButton(props: DropdownButtonT) {
+export default function DropdownButton() {
   return (
     <Button radius="sm" variant="light" className="font-medium text-medium border group px-2 gap-1">
       Categories

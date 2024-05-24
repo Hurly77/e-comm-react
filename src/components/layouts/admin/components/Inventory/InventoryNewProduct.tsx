@@ -1,7 +1,6 @@
-import { FolderIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import {
   Button,
-  Image,
   Input,
   Modal,
   ModalBody,
@@ -15,7 +14,6 @@ import { NEW_INVENTORY_FORM } from "../../constants/new-inventory";
 import React from "react";
 import { CreateProductModel } from "@/lib/sdk/models/ProductModel";
 import useInventory from "../../hooks/useInventory";
-import Carousel from "@/components/common/Carousel/Carousel";
 import InventoryImageUploader from "./InventoryImageUploader";
 
 export default function InventoryNewProduct() {
@@ -62,7 +60,7 @@ export default function InventoryNewProduct() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("event: ", e);
+
     const formData = new FormData();
     const files = fileRef.current?.files;
     if (!files?.length) return;
@@ -70,8 +68,6 @@ export default function InventoryNewProduct() {
     for (let i = 0; i < files.length; i++) {
       formData.append("images", files[i]);
     }
-
-    console.log(product);
 
     for (const key in product) {
       formData.append(key, product[key as keyof CreateProductModel]?.toString());

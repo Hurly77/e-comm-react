@@ -9,7 +9,7 @@ declare type AuthToken = {
 };
 
 declare type AuthUser = {
-  id: string;
+  id: number;
   email: string;
   first_name: string;
   last_name: string;

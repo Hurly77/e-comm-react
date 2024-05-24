@@ -55,9 +55,7 @@ function paramsTransformer(this: InternalAxiosRequestConfig, data: unknown, head
 
   // Ensure that form data boundaries are set correctly
   // When data is a FormData object, the Content-Type header is automatically set to multipart/form-data
-  console.log("Data", this.data instanceof FormData, this.data instanceof URLSearchParams);
   if (this.data instanceof FormData) return this.data;
-  console.log("not form data");
 
   return JSON.stringify(this.data);
 }
@@ -96,7 +94,6 @@ export class SessionService {
   }
 
   async removeSession() {
-    console.log(this.key);
     localStorage.removeItem(this.key);
     this.session = undefined;
   }

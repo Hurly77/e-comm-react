@@ -3,6 +3,8 @@ import { ProductModel } from "@/lib/sdk/models/ProductModel";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { Button, Card, CardBody, CardFooter, CardHeader, Image, Link } from "@nextui-org/react";
 import { toUSD } from "../../helpers/number";
+import useSession from "@/components/layouts/app/hooks/useSession";
+import { createCartItem } from "@/lib/sdk/methods";
 import React from "react";
 
 interface ProductCardT {
@@ -12,8 +14,11 @@ interface ProductCardT {
 
 export default function ProductCard({ product, size }: ProductCardT) {
   const [favorite, setFavorite] = React.useState<boolean>(false);
+  const { session } = useSession();
   const { title, thumbnailUrl, price, regularPrice } = product;
   const isDeal = product.regularPrice > 0;
+
+  const user = session?.user;
 
   return (
     <Card
@@ -58,7 +63,7 @@ export default function ProductCard({ product, size }: ProductCardT) {
               href={`/products/${product.id}`}
               className={cls(size === "sm" ? "overflow-hidden max-h-16 max-w-44 text-sm " : "text-lg font-medium")}
             >
-              <span className="truncate-lines line-clamp-2">{product.title}</span>
+              <span className="truncate-lines line-clamp-2">{title}</span>
             </Link>
             <Button
               onPress={() => setFavorite(!favorite)}
@@ -78,7 +83,19 @@ export default function ProductCard({ product, size }: ProductCardT) {
         </div>
       </CardBody>
       <CardFooter>
-        <Button size="sm" radius="sm" color={"primary"} className={cls(size === "sm" ? "w-full" : "")}>
+        <Button
+          size="sm"
+          radius="sm"
+          color={"primary"}
+          className={cls(size === "sm" ? "w-full" : "")}
+          onPress={() => {
+            if (user) {
+              createCartItem({ productId: product.id, userId: user.id }).then(() => {
+                console.log("Item added to cart");
+              });
+            }
+          }}
+        >
           Add to cart
         </Button>
       </CardFooter>

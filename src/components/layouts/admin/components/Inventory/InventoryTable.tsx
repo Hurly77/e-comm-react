@@ -48,7 +48,6 @@ export default function InventoryTable() {
             <Tooltip content="Delete Product">
               <TrashIcon
                 onClick={() => {
-                  console.log("Delete Product");
                   inventoryCtx.delete(item);
                 }}
                 className="cursor-pointer stroke-danger h-5 w-5"

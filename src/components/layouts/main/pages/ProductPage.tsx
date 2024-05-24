@@ -5,6 +5,7 @@ import CategoriesBreadCrumb from "../components/Categories/CategoriesBreadCrumb"
 import { toUSD } from "../helpers/number";
 import React from "react";
 import ProductList from "../components/Product/ProductList";
+import { QuantitySelect } from "@/components/common/Select/QuantitySelect";
 
 export default function ProductPage({ id }: { id: string | undefined }) {
   const { product, isLoading, error } = useProduct(id);
@@ -33,20 +34,7 @@ export default function ProductPage({ id }: { id: string | undefined }) {
             <div className="font-medium text-lg">{toUSD(price ?? 0)}</div>
           </div>
           <div className="flex gap-x-2 max-w-sm sticky top-0">
-            <Select
-              className="w-24"
-              variant="bordered"
-              size="lg"
-              radius="sm"
-              defaultSelectedKeys={["item-0"]}
-              items={selectOptions}
-            >
-              {(item) => (
-                <SelectItem key={item.key} value={item.value}>
-                  {item.value}
-                </SelectItem>
-              )}
-            </Select>
+            <QuantitySelect purchaseLimit={purchaseLimit ?? 6} />
             <Button color="primary" radius="sm" size="lg" className="grow">
               Add to Cart
             </Button>

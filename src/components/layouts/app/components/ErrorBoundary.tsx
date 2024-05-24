@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import React, { Component, ErrorInfo } from 'react';
+import React, { Component, ErrorInfo } from "react";
 
 export const ErrorBoundaryContext = React.createContext(
   {} as ErrorBoundaryContextType,
@@ -17,11 +17,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
+    console.error("Uncaught error:", error, errorInfo);
   }
 
   reset() {
-    console.log('reset');
+    console.log("reset");
     this.setState({ hasError: false });
   }
 

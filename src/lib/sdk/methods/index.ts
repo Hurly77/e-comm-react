@@ -6,3 +6,7 @@ export * from "./get-categories";
 export * from "./get-category-by-id";
 export * from "./get-products-by-category";
 export * from "./get-product-by-id";
+export * from "./create-cart-item";
+export * from "./get-cart";
+export * from "./delete-cart-item";
+export * from "./update-cart-item";
