@@ -14,13 +14,13 @@ type InventoryContextT = {
 
   inventory: ProductModel[] | undefined;
   isLoading: boolean;
-  error: any;
+  error: unknown;
 };
 
 export const InventoryContext = React.createContext<InventoryContextT>({} as InventoryContextT);
 
 export function InventoryContentProvider({ children }: { children: React.ReactNode }) {
-  const { data: inventoryData, error, isLoading: isLoadingInventory, mutate } = useSWR(GET_PRODUCTS, method);
+  const { data: inventoryData, error, isLoading: isLoadingInventory, mutate } = useSWR(GET_PRODUCTS, () => method());
 
   async function removeInventoryItem(product: ProductModel) {
     let response: Awaited<ReturnType<typeof deleteProduct>>;

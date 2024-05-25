@@ -3,15 +3,18 @@ import { Image, Link } from "@nextui-org/react";
 
 interface CategoryBubbleT {
   category: CategoryModel;
+  isDeal?: boolean;
 }
 
 export default function CategoryBubble(props: CategoryBubbleT) {
-  const { category } = props;
+  const { category, isDeal } = props;
+
+  const href = isDeal ? `/categories/deals/${category.id}` : `/categories/${category.id}`;
 
   return (
     <Link
       color="foreground"
-      href={`/categories/${category.id}`}
+      href={href}
       underline="hover"
       className="items-center flex flex-col snap-center cursor-pointer"
     >
@@ -32,7 +35,7 @@ export default function CategoryBubble(props: CategoryBubbleT) {
           <span className="w-fit text-center text-sm xl:text-xl bg-[#efefef]">{category.name}</span>
         )}
       </div>
-      <span className="w-full text-center text-sm">{category.name}</span>
+      <span className="w-full text-center text-sm max-w-16 lg:max-w-40">{category.name}</span>
     </Link>
   );
 }

@@ -7,6 +7,7 @@ export const COMMERCE_EPS = {
     //category
     categories: "category",
     category_id: "category/children/:id",
+    category_deals: "category/deals",
     //cart
     get_cart: "/cart/:userId",
   },

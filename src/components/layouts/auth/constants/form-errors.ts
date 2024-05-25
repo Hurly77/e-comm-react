@@ -1,9 +1,6 @@
-import type { CreateAccountPayload } from "@/lib/sdk/methods";
+import type { AuthSignup } from "@/sdk/utility/auth";
 
-type AuthFormErrorData = Record<
-  keyof CreateAccountPayload | "password" | "confirm_password",
-  string[]
->;
+type AuthFormErrorData = Record<keyof Omit<AuthSignup, "role"> | "confirm_password", string[]>;
 
 export const AUTH_SIGNUP_ERRORS_VALIDATION_ERRORS: AuthFormErrorData = {
   first_name: [""],

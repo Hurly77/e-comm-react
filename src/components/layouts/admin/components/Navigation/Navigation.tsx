@@ -11,7 +11,7 @@ export default function Navigation() {
   const sessionCtx = useSession();
 
   function handleLogout() {
-    sessionCtx.admin.logout();
+    sessionCtx.logout();
   }
 
   return (

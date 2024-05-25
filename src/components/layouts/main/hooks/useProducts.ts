@@ -3,7 +3,7 @@ import { getProducts as method, GET_PRODUCTS } from "@/lib/sdk/methods";
 import React from "react";
 
 export default function useProducts() {
-  const [filters, setFilters] = React.useState({
+  const [filters] = React.useState({
     take: 10,
     skip: 0,
   });
@@ -11,7 +11,7 @@ export default function useProducts() {
 
   return {
     products: data,
-    isLoading: !error && !data,
+    isLoading,
     isError: error,
   };
 }

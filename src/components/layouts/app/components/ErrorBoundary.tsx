@@ -2,15 +2,14 @@
 
 import React, { Component, ErrorInfo } from "react";
 
-export const ErrorBoundaryContext = React.createContext(
-  {} as ErrorBoundaryContextType,
-);
+export const ErrorBoundaryContext = React.createContext({} as ErrorBoundaryContextType);
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: ErrorBoundaryState = {
     hasError: false,
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   static getDerivedStateFromError(_Error: Error): ErrorBoundaryState {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };

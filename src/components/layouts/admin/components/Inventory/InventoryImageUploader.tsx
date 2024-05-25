@@ -1,7 +1,6 @@
-import { motion } from "framer-motion";
 import { Image } from "@nextui-org/react";
 import React from "react";
-import { FolderIcon, PlusIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { default as NextImage } from "next/image";
 
 export default function InventoryImageUploader(props: {

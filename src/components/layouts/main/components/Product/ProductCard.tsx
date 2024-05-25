@@ -90,9 +90,7 @@ export default function ProductCard({ product, size }: ProductCardT) {
           className={cls(size === "sm" ? "w-full" : "")}
           onPress={() => {
             if (user) {
-              createCartItem({ productId: product.id, userId: user.id }).then(() => {
-                console.log("Item added to cart");
-              });
+              createCartItem({ productId: product.id, userId: user.id });
             }
           }}
         >

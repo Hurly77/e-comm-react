@@ -1,4 +1,3 @@
-import { CategoryModel } from "../models/CategoryModel";
 import { ProductModel } from "../models/ProductModel";
 import { ecommApi } from "../utility/apis";
 

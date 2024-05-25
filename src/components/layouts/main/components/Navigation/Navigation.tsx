@@ -1,96 +1,47 @@
 import {
   Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Input,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
   Image,
+  NavbarMenu,
+  NavbarMenuToggle,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import React from "react";
-import { motion } from "framer-motion";
-
-import useSession from "@/components/layouts/app/hooks/useSession";
 
 import { NAV_LINKS } from "../../constants/nav";
-import {
-  ChevronDownIcon,
-  MagnifyingGlassIcon,
-  ShoppingCartIcon,
-  UserCircleIcon,
-  UserIcon,
-} from "@heroicons/react/24/outline";
-import useCategories from "../../hooks/useCategories";
-import { cls } from "@/components/layouts/app/helpers/twind-helpers";
+
+import NavigationShoppingCart from "./NavigationShoppingCart";
+import NavigationAccountButton from "./NavigationAccountButton";
+import NavigationCategoryMenu from "./NavigationCategoryMenu";
+import NavigationSearch from "./NavigationSearch";
 
 export default function Navigation() {
   const router = useRouter();
-  const sessionCtx = useSession();
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const { categories } = useCategories();
-
-  function AccountIcon() {
-    const session = sessionCtx.session;
-    if (session) {
-      return (
-        <div className="flex items-center gap-x-2">
-          <span>{session?.user.first_name}</span>
-          <UserCircleIcon className="h-6 w-6" />
-        </div>
-      );
-    } else {
-      return (
-        <div className="flex items-center gap-x-2">
-          <span className="text-sm">Sign in</span>
-          <UserCircleIcon className="h-6 w-6" />
-        </div>
-      );
-    }
-  }
-
-  function handleLogout() {
-    // sessionCtx.logout();
-    router.push("/auth/login");
-  }
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
     <Navbar maxWidth="2xl" className="shadow sticky top-0">
-      <NavbarContent justify="start">
+      <NavbarContent justify="center" className="sm:gap-0 gap-x-6">
+        <NavbarMenuToggle
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
+        <div>
+          <NavbarBrand>
+            <Button variant="light" isIconOnly onPress={() => router.push("/")}>
+              <Image src="/images/logo.png" alt="logo" width={50} height={50} />
+            </Button>
+          </NavbarBrand>
+        </div>
+      </NavbarContent>
+
+      <NavbarContent justify="start" className="hidden sm:flex">
         <NavbarItem>
-          <Button variant="light" isIconOnly onPress={() => router.push("/")}>
-            <Image src="/images/logo.png" alt="logo" width={50} height={50} />
-          </Button>
-        </NavbarItem>
-        <NavbarItem>
-          <Dropdown isOpen={isOpen} onOpenChange={(open) => setIsOpen(open)} radius="sm" size="sm" classNames={{}}>
-            <DropdownTrigger>
-              <Button radius="sm" variant="light" className="font-medium text-medium group gap-1">
-                Categories
-                <span className="opacity-0 transform -translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                  <ChevronDownIcon className={cls("h-4 w-4 transition-transform", isOpen ? "rotate-180" : "")} />
-                </span>{" "}
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu>
-              {(categories ?? []).map(({ id, name }) => (
-                <DropdownItem
-                  color="primary"
-                  variant="light"
-                  className="border-b last:border-none text-xl"
-                  href={`/categories/${id}`}
-                  key={id}
-                >
-                  {name}
-                </DropdownItem>
-              ))}
-            </DropdownMenu>
-          </Dropdown>
+          <NavigationCategoryMenu />
         </NavbarItem>
 
         {NAV_LINKS.map(({ key, href, title }) => (
@@ -102,26 +53,31 @@ export default function Navigation() {
         ))}
       </NavbarContent>
 
-      <NavbarContent justify="end">
-        <NavbarItem>
-          <Input placeholder="What can we help you find" endContent={<MagnifyingGlassIcon className="h-5 w-5" />} />
+      <NavbarContent justify="end" className="gap-x-2 sm:gap-x-4">
+        <NavbarItem className="">
+          <NavigationSearch />
+        </NavbarItem>
+        <NavbarItem className="hidden sm:block">
+          <NavigationAccountButton />
         </NavbarItem>
         <NavbarItem>
-          <Button radius="sm" className="border-none text-md hover:text-medium" variant="light" onClick={handleLogout}>
-            <AccountIcon />
-          </Button>
-        </NavbarItem>
-        <NavbarItem>
-          <Button radius="sm" className="border-none text-md hover:text-medium" variant="light">
-            <ShoppingCartIcon
-              onClick={() => {
-                router.push("/cart");
-              }}
-              className="h-6 w-6"
-            />
-          </Button>
+          <NavigationShoppingCart />
         </NavbarItem>
       </NavbarContent>
+
+      <NavbarMenu>
+        {NAV_LINKS.map(({ key, href, title }) => (
+          <NavbarItem key={key}>
+            <Button radius="sm" className="font-medium text-medium" variant="light" onClick={() => router.push(href)}>
+              {title}
+            </Button>
+          </NavbarItem>
+        ))}
+
+        <NavbarItem>
+          <NavigationAccountButton />
+        </NavbarItem>
+      </NavbarMenu>
     </Navbar>
   );
 }

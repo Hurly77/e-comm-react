@@ -78,8 +78,10 @@ export default function InventoryNewProduct() {
     try {
       const { data, error } = await inventoryCtx.add(formData);
       if (data) setSuccess("Product created successfully");
+      // eslint-disable-next-line no-console
       if (error) console.log("Success Error: ", error);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
     } finally {
       setIsCreatingProduct(false);

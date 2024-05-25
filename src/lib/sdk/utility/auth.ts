@@ -23,16 +23,16 @@ export type AuthSignup = {
 };
 
 type AuthEPS = {
-  get: {};
+  get: object;
   post: {
     login: string;
     signup: string;
   };
-  put: {};
+  put: object;
   delete: {
     logout: string;
   };
-  patch: {};
+  patch: object;
 };
 
 type AuthSuccess = { session: AuthSession };

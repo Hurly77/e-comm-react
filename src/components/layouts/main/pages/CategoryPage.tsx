@@ -11,7 +11,7 @@ export default function CategoryPage({ id }: { id: string | number }) {
     <div>
       <div className="flex justify-center py-4 items-center flex-col">
         <h1 className="text-2xl my-4">{category?.name}</h1>
-        <CategoriesBreadCrumb category={category} />
+        {category && <CategoriesBreadCrumb category={category} />}
       </div>
       {category?.children?.length ? (
         <div className="w-full justify-center flex">

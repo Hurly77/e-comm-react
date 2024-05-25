@@ -10,3 +10,4 @@ export * from "./create-cart-item";
 export * from "./get-cart";
 export * from "./delete-cart-item";
 export * from "./update-cart-item";
+export * from "./get-category-deals";

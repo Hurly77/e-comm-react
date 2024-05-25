@@ -1,13 +1,12 @@
 import { CategoryModel } from "@/lib/sdk/models/CategoryModel";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
-export default function CategoriesBreadCrumb({
-  category,
-  size,
-}: {
+export interface CategoryBreadCrumbT {
+  category: CategoryModel;
   size?: "sm" | "md" | "lg";
-  category?: CategoryModel;
-}) {
+}
+
+export default function CategoriesBreadCrumb({ category, size }: CategoryBreadCrumbT) {
   const getCrumbs = (category: CategoryModel) => {
     const crumbs = [];
     let current: CategoryModel | null = category;

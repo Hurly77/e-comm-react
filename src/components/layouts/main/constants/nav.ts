@@ -9,9 +9,9 @@ export type NavLinkData = {
 export const NAV_LINKS: NavLinkData[] = [
   {
     key: "nav-link-2",
-    routes: ["/feeds"],
+    routes: ["/categories/deals"],
     title: "Deals",
-    href: "/feeds",
+    href: "/categories/deals",
     className: "",
   },
   {

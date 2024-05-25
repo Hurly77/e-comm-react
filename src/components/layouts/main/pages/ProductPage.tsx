@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem, Button, Select, SelectItem, Spinner } from "@nextui-org/react";
+import { Accordion, AccordionItem, Button, Spinner } from "@nextui-org/react";
 import { ProductImageCollage } from "../components/Product/ProductImageCollage";
 import useProduct from "../hooks/useProduct";
 import CategoriesBreadCrumb from "../components/Categories/CategoriesBreadCrumb";
@@ -8,15 +8,10 @@ import ProductList from "../components/Product/ProductList";
 import { QuantitySelect } from "@/components/common/Select/QuantitySelect";
 
 export default function ProductPage({ id }: { id: string | undefined }) {
-  const { product, isLoading, error } = useProduct(id);
+  const { product } = useProduct(id);
   const { title, price, regularPrice, category, purchaseLimit } = product || {};
 
-  const selectOptions = React.useMemo(
-    () => Array.from(Array(purchaseLimit || 5), (_, i) => ({ key: `item-${i}`, value: (i + 1).toString() })),
-    [purchaseLimit]
-  );
-
-  if (!product) return <Spinner />;
+  if (!product || !category) return <Spinner />;
 
   return (
     <div className="w-full p-2flex items-center gap-y-4 flex-col max-w-screen-xl relative pb-10">

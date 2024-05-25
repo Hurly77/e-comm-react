@@ -1,5 +1,4 @@
 import { ProductModel } from "@/lib/sdk/models/ProductModel";
-import { useProductByCategory } from "../../hooks/useProductsByCategory";
 import ProductCard from "./ProductCard";
 
 export default function CategoryGrid({ products }: { products: ProductModel[] }) {

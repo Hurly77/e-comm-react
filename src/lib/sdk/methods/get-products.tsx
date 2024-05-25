@@ -13,6 +13,7 @@ export async function getProducts(filters: ProductFilters = {}) {
     params: { ...filters, deals: true },
   });
 
+  // eslint-disable-next-line no-console
   console.log(response);
 
   return response?.data;

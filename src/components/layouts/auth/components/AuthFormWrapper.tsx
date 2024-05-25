@@ -5,7 +5,7 @@ type AuthFormWrapperProps = {
   title?: string;
   subTitle?: string;
 };
-export default function AuthFormWrapper({ children, subTitle, title }: AuthFormWrapperProps) {
+export default function AuthFormWrapper({ children, title }: AuthFormWrapperProps) {
   return (
     <div className="flex-col items-center justify-center border-red-500  page border-4 h-screen bg-background grow flex relative">
       <div className="flex flex-col items-center grow text-primary w-full justify-center">

@@ -1,5 +1,4 @@
 import ErrorBoundary from "@/app/components/ErrorBoundary";
-import useSession from "@/app/hooks/useSession";
 
 import Navigation from "./components/Navigation/Navigation";
 import { AdminContextProvider } from "./context/AdminContext";
@@ -9,7 +8,6 @@ type AdminLayoutProps = {
 };
 
 export function AdminLayout({ children }: AdminLayoutProps) {
-  const { session } = useSession();
   return (
     <AdminContextProvider>
       <div className="layout flex-col">
