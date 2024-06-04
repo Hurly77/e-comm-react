@@ -7,6 +7,7 @@ import { CartModel } from "@/lib/sdk/models/CartModel";
 export interface CartContextT {
   cart: CartModel | null;
   isLoading: boolean;
+  isEmpty: boolean;
   error: unknown;
   addItem: (productId: number, quantity: number) => void;
   removeItem: (cartItemId: string) => void;
@@ -19,6 +20,8 @@ export function CartContextProvider({ children }: { children: React.ReactNode })
   const { session } = useSession();
   const fetcher = () => (session?.user ? getCart(session.user.id) : null);
   const { data, isLoading, error, mutate } = useSWR(`cart-${session?.user.id}`, fetcher);
+
+  const isEmpty = !data?.items || data?.items.length === 0;
 
   async function addItem(productId: number) {
     if (!session?.user) return;
@@ -40,6 +43,7 @@ export function CartContextProvider({ children }: { children: React.ReactNode })
 
   const value: CartContextT = {
     cart: data ?? null,
+    isEmpty,
     isLoading,
     error,
     addItem,

@@ -20,3 +20,5 @@ declare type ErrorBoundaryProps = {
 declare type ErrorBoundaryState = {
   hasError: boolean;
 };
+
+declare type UseStateProps<T> = [T, React.Dispatch<React.SetStateAction<T>>];

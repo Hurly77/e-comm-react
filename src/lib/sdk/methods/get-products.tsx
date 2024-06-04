@@ -5,12 +5,13 @@ export const GET_PRODUCTS = "GET_PRODUCTS";
 type ProductFilters = {
   take?: number;
   skip?: number;
+  search?: string;
   deals?: boolean;
 };
 
 export async function getProducts(filters: ProductFilters = {}) {
-  const response = await ecommApi.get<ProductModel[]>("products", {
-    params: { ...filters, deals: true },
+  const response = await ecommApi.get<{ result: ProductModel[]; count: number }>("products", {
+    params: filters,
   });
 
   // eslint-disable-next-line no-console

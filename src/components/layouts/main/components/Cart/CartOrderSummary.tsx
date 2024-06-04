@@ -2,14 +2,15 @@ import { Accordion, AccordionItem, Button } from "@nextui-org/react";
 import { useCart } from "../../hooks/useCart";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { toUSD } from "../../helpers/number";
+import { getNumOfItems, getSubtotal } from "../../helpers/cart-helpers";
 
 export default function CartOrderSummary() {
   const { cart } = useCart();
 
   if (!cart) return null;
 
-  const numOfItems = cart.items?.map((item) => item.quantity).reduce((a, b) => a + b);
-  const subTotal = cart.items?.reduce((acc, { product, quantity }) => acc + quantity * product.price ?? 0, 0);
+  const numOfItems = getNumOfItems(cart);
+  const subTotal = getSubtotal(cart);
   const salesTax = subTotal * 0.0725;
   const totalPrice = subTotal + salesTax;
 
