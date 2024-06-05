@@ -3,6 +3,7 @@ import ErrorBoundary from "@/app/components/ErrorBoundary";
 import Navigation from "./components/Navigation/Navigation";
 import MainContextProvider from "./context/MainContext";
 import { CartContextProvider } from "./context/CartContext";
+import CartDrawer from "./components/Cart/CartDrawer";
 
 type MainLayoutProps = {
   children?: React.ReactNode;
@@ -22,6 +23,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
             }
           >
             <div className="flex grow justify-center w-full">{children}</div>
+            <CartDrawer />
           </ErrorBoundary>
         </div>
       </CartContextProvider>

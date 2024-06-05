@@ -2,10 +2,9 @@ import { cls } from "@/components/layouts/app/helpers/twind-helpers";
 import { ProductModel } from "@/lib/sdk/models/ProductModel";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { Button, Card, CardBody, CardFooter, CardHeader, Image, Link } from "@nextui-org/react";
-import { toUSD } from "../../helpers/number";
-import useSession from "@/components/layouts/app/hooks/useSession";
-import { createCartItem } from "@/lib/sdk/methods";
 import React from "react";
+import { useCart } from "../../hooks/useCart";
+import ProductPrice from "./ProductPrice";
 
 interface ProductCardT {
   size?: "sm" | "md" | "lg";
@@ -14,11 +13,8 @@ interface ProductCardT {
 
 export default function ProductCard({ product, size }: ProductCardT) {
   const [favorite, setFavorite] = React.useState<boolean>(false);
-  const { session } = useSession();
+  const { preProcessCartItem } = useCart();
   const { title, thumbnailUrl, price, regularPrice } = product;
-  const isDeal = product.regularPrice > 0;
-
-  const user = session?.user;
 
   return (
     <Card
@@ -47,12 +43,7 @@ export default function ProductCard({ product, size }: ProductCardT) {
             }}
           />
         </div>
-        <div className="flex flex-col items-start w-full">
-          <span className={cls("w-full font-medium pt-1 pl-1", isDeal ? "pl-2 line-through text-foreground-400" : "")}>
-            {toUSD(price)} {}
-          </span>
-          {isDeal && <span className={cls("text-danger font-bold")}>{isDeal ? toUSD(regularPrice) : ""}</span>}
-        </div>
+        <ProductPrice price={price} regularPrice={regularPrice} />
       </CardHeader>
       <CardBody className="px-3">
         <div>
@@ -88,11 +79,7 @@ export default function ProductCard({ product, size }: ProductCardT) {
           radius="sm"
           color={"primary"}
           className={cls(size === "sm" ? "w-full" : "")}
-          onPress={() => {
-            if (user) {
-              createCartItem({ productId: product.id, userId: user.id });
-            }
-          }}
+          onPress={() => preProcessCartItem(product)}
         >
           Add to cart
         </Button>
