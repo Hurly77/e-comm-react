@@ -4,6 +4,7 @@ import { auth, AuthLogin, AuthSignup } from "@/lib/sdk/utility/auth";
 
 import { SessionContextT } from "../constants/app.types";
 import { AppContext } from "./AppContext";
+import IdleTimer from "@/lib/IdleTimer";
 
 export const SessionContext = React.createContext({} as SessionContextT);
 export default function SessionContextProvider({ children }: SessionContextProviderT) {
@@ -29,14 +30,19 @@ export default function SessionContextProvider({ children }: SessionContextProvi
     return false;
   }
 
-  async function logout() {
-    setLoading(); // default to true
-    await auth.logout();
-    // eslint-disable-next-line no-console
+  // function is used in a React Hook.
+  // To prevent max depth error, it is defined outside of the hook
+  const logout = React.useCallback(
+    async function () {
+      setLoading(); // default to true
+      await auth.logout();
+      // eslint-disable-next-line no-console
 
-    setSession(null);
-    setLoading(false);
-  }
+      setSession(null);
+      setLoading(false);
+    },
+    [setLoading]
+  );
 
   // function defined here to add layer of pre-processing
   // For Session, not need now but can be added later
@@ -47,6 +53,25 @@ export default function SessionContextProvider({ children }: SessionContextProvi
     if (data?.session) setSession(data?.session);
     setLoading(false);
   }
+
+  React.useEffect(() => {
+    const timer = new IdleTimer({
+      timeout: 60 * 15,
+      onExpired: () => {
+        // eslint-disable-next-line no-console
+        console.log("expired");
+        setSession(null);
+        logout();
+      },
+      onTimeout: () => {
+        // eslint-disable-next-line no-console
+        console.log("timeout");
+        setSession(null);
+        logout();
+      },
+    });
+    () => timer.cleanUp();
+  }, [logout]);
 
   React.useEffect(() => {
     const checkSession = async () => {

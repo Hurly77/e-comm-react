@@ -1,5 +1,7 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import { CategoriesAllList } from "../components/Categories/CategoriesAllList";
+import { default as NextLink } from "next/link";
 
 export default function AllCategories() {
   return (
@@ -8,7 +10,9 @@ export default function AllCategories() {
         <h1 className="text-3xl font-medium">Shop All Categories</h1>
         <Breadcrumbs size="lg">
           <BreadcrumbItem href="/">E-Shop</BreadcrumbItem>
-          <BreadcrumbItem href="/categories/all">All Categories</BreadcrumbItem>
+          <BreadcrumbItem as={NextLink} href="/categories/all">
+            All Categories
+          </BreadcrumbItem>
         </Breadcrumbs>
       </div>
       <CategoriesAllList />

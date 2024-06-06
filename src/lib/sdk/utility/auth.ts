@@ -41,10 +41,8 @@ type AuthApi = ApiService<AuthEPS["get"], AuthEPS["post"], AuthEPS["patch"], Aut
 
 export function AuthClient<ApiClient extends AuthApi>(API: ApiClient) {
   async function logout() {
-    const response = await API.delete("logout");
-
+    console.log("Logout");
     await API.sessionService.removeSession();
-    return response;
   }
   async function getSession() {
     return API.sessionService.getSession();

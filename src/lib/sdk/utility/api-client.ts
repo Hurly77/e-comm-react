@@ -89,12 +89,14 @@ export class SessionService {
   }
 
   async setSession(session: AuthSession) {
+    localStorage.setItem("_expiredToken", session.exp);
     localStorage.setItem(this.key, JSON.stringify(session));
     this.session = session;
   }
 
   async removeSession() {
     localStorage.removeItem(this.key);
+    localStorage.removeItem("_expiredToken");
     this.session = undefined;
   }
 }

@@ -34,7 +34,7 @@ declare type AuthTeam = {
 declare type AuthSession = {
   user: AuthUser;
   token: string;
-  expiration: string;
+  exp: string;
 };
 
 declare type QueryType = boolean | string | number | QueryType[];

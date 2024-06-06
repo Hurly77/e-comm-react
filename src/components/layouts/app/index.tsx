@@ -10,9 +10,10 @@ import SessionContextProvider from "./context/SessionContext";
 
 export default function AppLayout({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
+
   return (
     <ErrorBoundary fallback={<></>}>
-      <NextUIProvider>
+      <NextUIProvider navigate={router.push}>
         <AppContextProvider>
           <SessionContextProvider>
             <Head>
