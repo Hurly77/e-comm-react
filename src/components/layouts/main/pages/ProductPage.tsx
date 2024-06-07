@@ -2,13 +2,15 @@ import { Accordion, AccordionItem, Button, Spinner } from "@nextui-org/react";
 import { ProductImageCollage } from "../components/Product/ProductImageCollage";
 import useProduct from "../hooks/useProduct";
 import CategoriesBreadCrumb from "../components/Categories/CategoriesBreadCrumb";
-import { toUSD } from "../helpers/number";
 import React from "react";
 import ProductList from "../components/Product/ProductList";
 import { QuantitySelect } from "@/components/common/Select/QuantitySelect";
+import ProductPrice from "../components/Product/ProductPrice";
+import { useCart } from "../hooks/useCart";
 
 export default function ProductPage({ id }: { id: string | undefined }) {
   const { product } = useProduct(id);
+  const { preProcessCartItem } = useCart();
   const { title, price, regularPrice, category, purchaseLimit } = product || {};
 
   if (!product || !category) return <Spinner />;
@@ -22,15 +24,14 @@ export default function ProductPage({ id }: { id: string | undefined }) {
         <div className="w-1/2">
           <ProductImageCollage product={product} />
         </div>
-        <div className="w-1/2 p-4 sticky top-24 h-fit">
-          <div>
+        <div className="w-1/2 p-4 sticky top-24 h-fit space-y-4">
+          <div className="space-y-2">
             <h1 className="text-2xl font-medium">{title}</h1>
-            {regularPrice ? <div>{toUSD(regularPrice ?? 0)}</div> : null}
-            <div className="font-medium text-lg">{toUSD(price ?? 0)}</div>
+            <ProductPrice price={price ?? 0} regularPrice={regularPrice ?? 0} />
           </div>
           <div className="flex gap-x-2 max-w-sm sticky top-0">
             <QuantitySelect purchaseLimit={purchaseLimit ?? 6} />
-            <Button color="primary" radius="sm" size="lg" className="grow">
+            <Button onPress={() => preProcessCartItem(product)} color="primary" radius="sm" size="lg" className="grow">
               Add to Cart
             </Button>
           </div>

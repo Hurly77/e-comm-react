@@ -7,7 +7,7 @@ export function getSubtotal(cart?: CartModel) {
   return subTotal;
 }
 
-export function getNumOfItems(cart?: CartModel) {
+export function getNumOfItems(cart?: CartModel | null) {
   if (!cart?.items || cart?.items?.length <= 0) return 0;
   const numOfItems = cart?.items?.map((item) => item.quantity)?.reduce((a, b) => a + b);
 
