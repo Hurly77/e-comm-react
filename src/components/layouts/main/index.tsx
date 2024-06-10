@@ -13,7 +13,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <MainContextProvider>
       <CartContextProvider>
-        <div className="layout flex-col">
+        <div id="main-layout" className="layout flex-col">
           <Navigation />
           <ErrorBoundary
             fallback={

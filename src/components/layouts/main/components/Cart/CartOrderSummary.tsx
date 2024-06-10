@@ -3,9 +3,11 @@ import { useCart } from "../../hooks/useCart";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { toUSD } from "../../helpers/number";
 import { getNumOfItems, getSubtotal } from "../../helpers/cart-helpers";
+import { useRouter } from "next/router";
 
 export default function CartOrderSummary() {
   const { cart } = useCart();
+  const router = useRouter();
 
   if (!cart) return null;
 
@@ -51,7 +53,12 @@ export default function CartOrderSummary() {
           </AccordionItem>
         </Accordion>
       </div>
-      <Button color="primary" radius="sm" className="w-full font-medium text-md">
+      <Button
+        onClick={() => router.push("/checkout")}
+        color="primary"
+        radius="sm"
+        className="w-full font-medium text-md"
+      >
         Continue to Checkout
       </Button>
     </div>

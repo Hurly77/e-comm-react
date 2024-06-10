@@ -15,10 +15,10 @@ export default function NavigationShoppingCart() {
       isIconOnly
       radius="sm"
       variant="light"
-      className="text-md hover:text-medium"
+      className="text-md hover:text-medium overflow-visible"
       onPress={() => router.push("/cart")}
     >
-      <Badge content={cartItemCount || undefined} color="primary">
+      <Badge size="sm" content={cartItemCount || undefined} color="primary">
         <ShoppingCartIcon className="h-6 w-6" />
       </Badge>
     </Button>

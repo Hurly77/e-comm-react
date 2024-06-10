@@ -26,8 +26,8 @@ export function InventoryContentProvider({ children }: { children: React.ReactNo
     let response: Awaited<ReturnType<typeof deleteProduct>>;
     try {
       response = await deleteProduct(product.id);
-      const updatedInventory = inventoryData?.filter((item) => item.id !== product.id);
-      await mutate(updatedInventory, false);
+      const updatedInventory = inventoryData?.result?.filter((item) => item.id !== product.id);
+      await mutate({ count: updatedInventory?.length ?? 0, result: updatedInventory ?? [] }, false);
       return response;
     } catch (error) {
       return { error, data: undefined };
@@ -38,7 +38,13 @@ export function InventoryContentProvider({ children }: { children: React.ReactNo
     let response: Awaited<ReturnType<typeof createProduct>>;
     try {
       response = await createProduct(formData);
-      if (response.data) await mutate([...(inventoryData ?? []), response.data]);
+      const newProduct = response.data;
+      if (newProduct) {
+        await mutate((prev) => ({
+          result: [newProduct, ...(prev?.result ?? [])],
+          count: (prev?.count ?? 0) + 1,
+        }));
+      }
       return response;
     } catch (error) {
       return { error, data: undefined };
@@ -49,7 +55,7 @@ export function InventoryContentProvider({ children }: { children: React.ReactNo
     add: createInventoryItem,
     delete: removeInventoryItem,
     edit: editInventoryItem,
-    inventory: inventoryData,
+    inventory: inventoryData?.result,
     isLoading: isLoadingInventory,
     error,
   };

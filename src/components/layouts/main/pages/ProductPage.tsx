@@ -16,7 +16,7 @@ export default function ProductPage({ id }: { id: string | undefined }) {
   if (!product || !category) return <Spinner />;
 
   return (
-    <div className="w-full p-2flex items-center gap-y-4 flex-col max-w-screen-xl relative pb-10">
+    <div className="w-full p-2flex items-center gap-y-4 flex-col max-w-screen-xl relative pb-10 border-2 border-red-500">
       <div className="w-full py-4">
         <CategoriesBreadCrumb size="md" category={category} />
       </div>
@@ -24,7 +24,7 @@ export default function ProductPage({ id }: { id: string | undefined }) {
         <div className="w-1/2">
           <ProductImageCollage product={product} />
         </div>
-        <div className="w-1/2 p-4 sticky top-24 h-fit space-y-4">
+        <div className="w-1/2 p-4 sticky top-24 h-fit space-y-4 border">
           <div className="space-y-2">
             <h1 className="text-2xl font-medium">{title}</h1>
             <ProductPrice price={price ?? 0} regularPrice={regularPrice ?? 0} />

@@ -11,3 +11,8 @@ export * from "./get-cart";
 export * from "./delete-cart-item";
 export * from "./update-cart-item";
 export * from "./get-category-deals";
+export * from "./create-payment-intent";
+export * from "./create-user-shipping-address";
+export * from "./get-user-shipping-address";
+export * from "./get-payment-methods";
+export * from "./create-card-pm";

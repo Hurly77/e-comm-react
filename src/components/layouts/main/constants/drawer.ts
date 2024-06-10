@@ -1,6 +1,6 @@
 import { HTMLMotionProps } from "framer-motion";
 
-export const CART_MOTION_PROPS: HTMLMotionProps<"section"> = {
+export const DRAWER_MOTION_PROPS: HTMLMotionProps<"section"> = {
   initial: {
     x: 500,
   },
