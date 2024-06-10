@@ -41,6 +41,7 @@ type AuthApi = ApiService<AuthEPS["get"], AuthEPS["post"], AuthEPS["patch"], Aut
 
 export function AuthClient<ApiClient extends AuthApi>(API: ApiClient) {
   async function logout() {
+    // eslint-disable-next-line no-console
     console.log("Logout");
     await API.sessionService.removeSession();
   }
