@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/inline-script-id */
 import "../styles/globals.css";
 
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import type { ReactElement, ReactNode } from "react";
+
 import React from "react";
 
 import AppLayout from "@/app/index";
@@ -28,7 +30,10 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{Component.title}</title>
       </Head>
+
       <AppLayout>{getLayout(<Component {...pageProps} />)}</AppLayout>
+      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER ?? ""} />
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? ""} />
     </>
   );
 }

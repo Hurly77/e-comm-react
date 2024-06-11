@@ -8,6 +8,7 @@ export const Cart: NextPageWithLayout = () => {
   return <CartPage />;
 };
 
+Cart.title = "Cart";
 Cart.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };

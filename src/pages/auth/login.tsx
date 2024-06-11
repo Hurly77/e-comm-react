@@ -9,6 +9,7 @@ export const AuthLogin: NextPageWithLayout = () => {
   return <Login isAdmin={false} />;
 };
 
+AuthLogin.title = "Login";
 AuthLogin.getLayout = function getLayout(page: ReactElement) {
   return <AuthLayout>{page}</AuthLayout>;
 };

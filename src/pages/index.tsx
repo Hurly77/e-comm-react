@@ -8,6 +8,7 @@ export const Home: NextPageWithLayout = () => {
   return <HomePage />;
 };
 
+Home.title = "E-Shop Home";
 Home.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };

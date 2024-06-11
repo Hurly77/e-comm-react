@@ -13,6 +13,7 @@ export const CategoryDeal: NextPageWithLayout = () => {
   return <CategoryPage id={categoryId?.toString() ?? ""} />;
 };
 
+CategoryDeal.title = "Category Deal: ";
 CategoryDeal.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };

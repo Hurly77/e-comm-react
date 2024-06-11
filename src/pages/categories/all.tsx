@@ -9,6 +9,7 @@ export const AllCategoriesPage: NextPageWithLayout = () => {
   return <AllCategories />;
 };
 
+AllCategoriesPage.title = "All Categories";
 AllCategoriesPage.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };

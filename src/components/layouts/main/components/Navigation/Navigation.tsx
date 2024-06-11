@@ -17,6 +17,7 @@ import NavigationShoppingCart from "./NavigationShoppingCart";
 import NavigationAccountButton from "./NavigationAccountButton";
 import NavigationCategoryMenu from "./NavigationCategoryMenu";
 import NavigationSearch from "./NavigationSearch";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function Navigation() {
   const router = useRouter();
@@ -68,7 +69,15 @@ export default function Navigation() {
       <NavbarMenu>
         {NAV_LINKS.map(({ key, href, title }) => (
           <NavbarItem key={key}>
-            <Button radius="sm" className="font-medium text-medium" variant="light" onClick={() => router.push(href)}>
+            <Button
+              radius="sm"
+              className="font-medium text-medium"
+              variant="light"
+              onClick={() => {
+                sendGTMEvent({ event: "navigation", category: "menu", action: "click", label: title });
+                router.push(href);
+              }}
+            >
               {title}
             </Button>
           </NavbarItem>

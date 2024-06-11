@@ -8,6 +8,7 @@ export const FourOFour: NextPageWithLayout = () => {
   return <>Page Not Found</>;
 };
 
+FourOFour.title = "E-Shop: 404";
 FourOFour.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };

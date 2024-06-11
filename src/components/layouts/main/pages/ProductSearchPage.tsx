@@ -4,6 +4,7 @@ import React from "react";
 import { Pagination, Spinner } from "@nextui-org/react";
 import ProductGrid from "../components/Product/ProductGrid";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import Head from "next/head";
 
 export default function ProductSearchPage() {
   const router = useRouter();
@@ -27,34 +28,39 @@ export default function ProductSearchPage() {
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="pb-24">
-      <div className="py-10 max-w-screen-xl">
-        {(products?.length ?? 0) > 0 ? (
-          <ProductGrid products={products ?? []} />
-        ) : products?.length === 0 && !isLoading ? (
-          <div className="text-center space-y-10">
-            <ExclamationTriangleIcon className="h-14 w-14 mx-auto border rounded-full bg-default p-1" />
-            <div>
-              <p className="text-2xl">&quot;{query}&quot;</p>
-              <h1 className="text-2xl font-bold text-center">Could not find a match for your search</h1>
+    <>
+      <Head>
+        <title>Search: {query}</title>
+      </Head>
+      <div className="pb-24">
+        <div className="py-10 max-w-screen-xl">
+          {(products?.length ?? 0) > 0 ? (
+            <ProductGrid products={products ?? []} />
+          ) : products?.length === 0 && !isLoading ? (
+            <div className="text-center space-y-10">
+              <ExclamationTriangleIcon className="h-14 w-14 mx-auto border rounded-full bg-default p-1" />
+              <div>
+                <p className="text-2xl">&quot;{query}&quot;</p>
+                <h1 className="text-2xl font-bold text-center">Could not find a match for your search</h1>
+              </div>
             </div>
-          </div>
-        ) : null}
-      </div>
+          ) : null}
+        </div>
 
-      <div className="w-full flex justify-center">
-        {totalPages > 1 && (
-          <Pagination
-            total={totalPages}
-            page={1}
-            onChange={(page) => {
-              const newSkip = 25 * (page - 1);
+        <div className="w-full flex justify-center">
+          {totalPages > 1 && (
+            <Pagination
+              total={totalPages}
+              page={1}
+              onChange={(page) => {
+                const newSkip = 25 * (page - 1);
 
-              setFilters({ ...filters, skip: newSkip });
-            }}
-          />
-        )}
+                setFilters({ ...filters, skip: newSkip });
+              }}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

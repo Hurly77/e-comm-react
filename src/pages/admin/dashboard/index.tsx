@@ -9,6 +9,7 @@ export const Dashboard: NextPageWithLayout = () => {
   return <AdminDashboardPage />;
 };
 
+Dashboard.title = "Admin: Dashboard";
 Dashboard.getLayout = function getLayout(page: ReactElement) {
   return <AdminLayout>{page}</AdminLayout>;
 };

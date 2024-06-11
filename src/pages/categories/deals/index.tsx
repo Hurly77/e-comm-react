@@ -9,6 +9,7 @@ export const AllCategoryDeals: NextPageWithLayout = () => {
   return <AllCategoryDealsPage />;
 };
 
+AllCategoryDeals.title = "All Category Deals";
 AllCategoryDeals.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };

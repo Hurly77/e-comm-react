@@ -9,6 +9,7 @@ export const ProductSearch: NextPageWithLayout = () => {
   return <ProductSearchPage />;
 };
 
+ProductSearch.title = "Product Search";
 ProductSearch.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };
