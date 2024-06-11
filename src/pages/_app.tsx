@@ -7,12 +7,12 @@ import type { ReactElement, ReactNode } from "react";
 import React from "react";
 
 import AppLayout from "@/app/index";
+import Head from "next/head";
 
-export type NextPageWithLayout<P = Record<string, never>, IP = P> = NextPage<
-  P,
-  IP
-> & {
+export type NextPageWithLayout<P = Record<string, never>, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
+  title?: string;
+  description?: string;
 };
 
 type AppPropsWithLayout = AppProps & {
@@ -24,6 +24,10 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{Component.title}</title>
+      </Head>
       <AppLayout>{getLayout(<Component {...pageProps} />)}</AppLayout>
     </>
   );

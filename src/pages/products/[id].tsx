@@ -13,6 +13,7 @@ export const Product: NextPageWithLayout = () => {
   return <ProductPage id={productId?.toString()} />;
 };
 
+Product.title = "Products Details";
 Product.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };

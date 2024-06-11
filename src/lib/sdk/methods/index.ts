@@ -15,4 +15,6 @@ export * from "./create-payment-intent";
 export * from "./create-user-shipping-address";
 export * from "./get-user-shipping-address";
 export * from "./get-payment-methods";
-export * from "./create-card-pm";
+export * from "./get-setup-intent";
+export * from "./get-orders";
+export * from "./get-order-by-id";

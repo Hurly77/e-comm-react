@@ -27,6 +27,15 @@ export default function NavigationAccountDropdown(props: NavigationAccountDropdo
       <DropdownMenu>
         <DropdownItem onClick={logout}>Logout</DropdownItem>
         <DropdownItem>Account</DropdownItem>
+        <DropdownItem
+          color="primary"
+          variant="light"
+          className="border-b last:border-none text-xl"
+          href="/account/orders"
+          onClick={(e) => e.preventDefault()}
+        >
+          Orders
+        </DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );
