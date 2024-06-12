@@ -1,10 +1,4 @@
-import {
-  getPaymentMethods,
-  getUserShippingAddress,
-  createUserShippingAddress,
-  CreateUserShippingAddr,
-} from "@/lib/sdk/methods";
-import { getSetupIntent } from "@/lib/sdk/methods/get-setup-intent";
+import { createUserShippingAddress, CreateUserShippingAddr } from "@/lib/sdk/methods";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe, Stripe, StripeElementsOptions } from "@stripe/stripe-js";
 import React from "react";
@@ -12,6 +6,7 @@ import useSWR, { KeyedMutator } from "swr";
 import { CheckoutSkeleton } from "../components/Checkout/CheckoutSkeleton";
 import { UserShippingAddress } from "@/lib/sdk/models/UserShippingAddress";
 import { default as StripeAPI } from "stripe";
+import { checkoutFetcher } from "@/lib/sdk/fetchers/checkout-fetcher";
 
 export interface CheckoutProviderT {
   children: React.ReactNode;
@@ -19,8 +14,9 @@ export interface CheckoutProviderT {
 }
 
 export interface CheckoutContextT {
+  userId: number;
   isLoading: boolean;
-  client_secret?: string | null;
+  isValidating: boolean;
   stripePromise: Promise<Stripe | null>;
   selectedPm: StripeAPI.PaymentMethod | null;
   selectedAddress: UserShippingAddress | null;
@@ -37,14 +33,7 @@ export interface CheckoutContextT {
   setSelectedAddress: React.Dispatch<React.SetStateAction<UserShippingAddress | null>>;
   updateToggles(toggle: "card_list" | "card_form" | "address_form" | "address_list", value: boolean): Promise<void>;
   addNewAddress: (address: CreateUserShippingAddr) => Promise<void>;
-  mutate: KeyedMutator<
-    | {
-        paymentMethods: StripeAPI.ApiList<StripeAPI.PaymentMethod> | undefined;
-        userShippingAddresses: UserShippingAddress[] | undefined;
-        setupIntent: StripeAPI.SetupIntent | undefined;
-      }
-    | undefined
-  >;
+  mutate: KeyedMutator<Awaited<ReturnType<typeof checkoutFetcher>>>;
   error: unknown;
 }
 
@@ -63,23 +52,10 @@ export default function CheckoutContextProvider({ children, session }: CheckoutP
     address_list: false,
   });
 
-  const fetcher = async () => {
-    if (!userId) return;
-    // eslint-disable-next-line no-console
-    console.log("Refetching Checkout Data");
-    const [paymentMethods, userShippingAddresses, setupIntent] = await Promise.all([
-      getPaymentMethods(userId),
-      getUserShippingAddress(userId),
-      getSetupIntent(userId),
-    ]);
-
-    return { paymentMethods, userShippingAddresses, setupIntent };
-  };
-
   const CACHE_KEY = `CHECKOUT_${userId}`;
-  const { data, isLoading, error, mutate } = useSWR(CACHE_KEY, fetcher);
+  const { data, isLoading, isValidating, error, mutate } = useSWR(CACHE_KEY, () => checkoutFetcher(userId));
 
-  const { userShippingAddresses, setupIntent } = data ?? {};
+  const { userShippingAddresses, paymentMethods, default_pm_id } = data ?? {};
 
   React.useEffect(() => {
     if (!formToggles.address_form && userShippingAddresses?.length === 0) {
@@ -94,12 +70,13 @@ export default function CheckoutContextProvider({ children, session }: CheckoutP
       setSelectedAddress(userShippingAddresses[0]);
     }
 
-    if (!selectedPm && data?.paymentMethods?.data.length) {
+    if (!selectedPm && paymentMethods?.data?.length) {
       // eslint-disable-next-line no-console
       console.log("Setting Selected Payment Method");
-      setSelectedPm(data.paymentMethods.data?.[0]);
+      const defaultPm = paymentMethods.data.find((pm) => pm.id === default_pm_id);
+      setSelectedPm(defaultPm ? defaultPm : paymentMethods.data[0]);
     }
-  }, [data, selectedAddress, selectedPm, userShippingAddresses]);
+  }, [data, default_pm_id, paymentMethods?.data, selectedAddress, selectedPm, userShippingAddresses]);
 
   async function addNewAddress(address: CreateUserShippingAddr) {
     try {
@@ -141,7 +118,9 @@ export default function CheckoutContextProvider({ children, session }: CheckoutP
   }
 
   const value: CheckoutContextT = {
-    isLoading: false,
+    userId: userId ?? 0,
+    isValidating,
+    isLoading,
     stripePromise,
     paymentMethods: data?.paymentMethods?.data ?? [],
     shippingAddresses: userShippingAddresses ?? [],
@@ -160,7 +139,8 @@ export default function CheckoutContextProvider({ children, session }: CheckoutP
   // const clientSecret = data?.client_secret;
 
   const elementOptions: StripeElementsOptions = {
-    clientSecret: setupIntent?.client_secret ?? "",
+    mode: "setup",
+    currency: "usd",
     appearance: {
       theme: "stripe",
     },
@@ -168,7 +148,7 @@ export default function CheckoutContextProvider({ children, session }: CheckoutP
 
   return (
     <CheckoutContext.Provider value={value}>
-      {setupIntent && !isLoading ? (
+      {!isLoading ? (
         <Elements stripe={stripePromise} options={elementOptions}>
           {children}
         </Elements>

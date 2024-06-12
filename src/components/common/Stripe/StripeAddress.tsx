@@ -2,17 +2,14 @@ import React from "react";
 import { AddressElement } from "@stripe/react-stripe-js";
 import { Button, Checkbox } from "@nextui-org/react";
 import { DefaultValuesOption } from "@stripe/stripe-js";
+import { StripeElementProps } from "./types";
 
-export interface StripeAddressT {
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  onCancel?: () => void;
-  btnText?: string;
+export interface StripeAddressT extends StripeElementProps {
   defaultValues?: DefaultValuesOption;
-  setDefault?: (value: boolean) => void;
 }
 
 export default function StripeAddress(props: StripeAddressT) {
-  const { onSubmit, onCancel, setDefault, btnText } = props;
+  const { onSubmit, onCancel, setToDefault, isLoading, btnText } = props;
 
   const [isReady, setIsReady] = React.useState(false);
 
@@ -35,11 +32,12 @@ export default function StripeAddress(props: StripeAddressT) {
       />
       {isReady && (
         <>
-          <Checkbox onValueChange={setDefault} className="my-1" name="saveAddress">
+          <Checkbox onValueChange={setToDefault} className="my-1" name="saveAddress">
             set as default address
           </Checkbox>
           <div className="flex items-center gap-4">
             <Button
+              isLoading={isLoading}
               onPress={onCancel}
               size="lg"
               radius="sm"

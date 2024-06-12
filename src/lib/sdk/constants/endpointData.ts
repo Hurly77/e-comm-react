@@ -40,6 +40,8 @@ export const COMMERCE_EPS = {
   patch: {
     //cart
     cart_item: "/cart/item",
+    // checkout
+    default_pm: "/checkout/pm/customer/default",
   },
   put: {},
   delete: {

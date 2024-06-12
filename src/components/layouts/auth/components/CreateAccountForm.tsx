@@ -8,6 +8,7 @@ import { CREATE_ACCOUNT_FORM } from "../constants/Auth.text";
 import { AUTH_SIGNUP_ERRORS_VALIDATION_ERRORS } from "../constants/form-errors";
 import { passwordSignupSchema } from "../helpers/forms";
 import { AuthSignup } from "@/lib/sdk/utility/auth";
+import { phoneParser } from "../../app/helpers/form-helpers";
 
 export default function CreateAccountForm({ isAdmin }: { isAdmin: boolean }) {
   const router = useRouter();
@@ -30,7 +31,7 @@ export default function CreateAccountForm({ isAdmin }: { isAdmin: boolean }) {
   function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 
-    setCredentials({ ...credentials, [name]: value });
+    setCredentials({ ...credentials, [name]: name === "phone_number" ? phoneParser(value) : value });
   }
 
   function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -134,6 +135,7 @@ export default function CreateAccountForm({ isAdmin }: { isAdmin: boolean }) {
           name="phone_number"
           required
           onChange={onChangeHandler}
+          value={credentials.phone_number}
           label={CREATE_ACCOUNT_FORM.INPUTS.PHONE_NUMBER.LABEL}
           placeholder={CREATE_ACCOUNT_FORM.INPUTS.PHONE_NUMBER.PLACEHOLDER}
         />

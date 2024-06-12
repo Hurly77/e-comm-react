@@ -6,36 +6,58 @@ import React from "react";
 import { CheckoutContext } from "../../context/CheckoutContext";
 import CheckoutSelectedCard from "./CheckoutCardItem";
 import CheckoutCardList from "./CheckoutCardList";
+import { getSetupIntent, updateUserDefaultPm } from "@/lib/sdk/methods";
 
 export default function CheckoutPayment() {
   const checkoutCtx = React.useContext(CheckoutContext);
   const stripe = useStripe();
   const elements = useElements();
+  const [confirmingPM, setConfirmingPM] = React.useState(false);
+  const [isDefault, setIsDefault] = React.useState(false);
 
-  const { selectedPm, formToggles, updateToggles } = checkoutCtx;
+  const { selectedPm, userId, formToggles, updateToggles } = checkoutCtx;
   const addressOpen = formToggles.address_list || formToggles.address_form;
   const isPaymentOpen = formToggles.card_list || formToggles.card_form;
 
   async function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setConfirmingPM(true);
     if (!elements || !stripe) return;
     const { error } = await elements.submit();
     const element = elements.getElement("payment");
     if (error || !element) return;
 
-    const confirmPaymentResponse = await stripe.confirmSetup({
-      elements,
-      confirmParams: {
-        return_url: "http://localhost:3000/checkout",
-      },
-      redirect: "if_required",
-    });
+    try {
+      const { client_secret: clientSecret } = (await getSetupIntent(checkoutCtx.userId)) ?? {};
+      if (!clientSecret) return alert("Error Creating Setup Intent");
 
-    // eslint-disable-next-line no-console
-    console.log("Setup Intent Confirm :", confirmPaymentResponse);
+      const { error, setupIntent } = await stripe.confirmSetup({
+        elements,
+        clientSecret,
+        redirect: "if_required",
+        confirmParams: { return_url: "http://localhost:3000/checkout" },
+      });
 
-    await checkoutCtx.mutate((prev) => prev);
-    updateToggles("card_form", false);
+      if (error) {
+        // eslint-disable-next-line no-console
+        console.log("Error Confirming Setup Intent", error);
+        return alert(error.message);
+      }
+
+      if (isDefault && setupIntent.payment_method) {
+        const pm = setupIntent.payment_method;
+        const pmId = typeof pm === "string" ? pm : pm.id;
+        updateUserDefaultPm(userId, pmId);
+      }
+
+      await checkoutCtx.mutate((prev) => prev);
+      updateToggles("card_form", false);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Error Confirming Setup Intent", error);
+    } finally {
+      setConfirmingPM(false);
+    }
   }
 
   const renderCardBody = () => {
@@ -43,9 +65,11 @@ export default function CheckoutPayment() {
       case formToggles.card_form:
         return (
           <StripePayment
+            isLoading={confirmingPM}
             btnText="Save & Continue"
             onSubmit={handleOnSubmit}
             onCancel={() => updateToggles("card_form", false)}
+            setToDefault={setIsDefault}
           />
         );
       case formToggles.card_list:

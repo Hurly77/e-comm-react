@@ -14,6 +14,7 @@ export default function CheckoutShipping() {
   const elements = useElements();
 
   const [isDefault, setIsDefault] = React.useState(false);
+  const [confirmingShipping, setConfirmingPM] = React.useState(false);
   const { formToggles, updateToggles, selectedAddress } = checkoutCtx;
   const paymentFormOpen = formToggles.card_list || formToggles.card_form;
   const isEditingAddress = formToggles.address_form || formToggles.address_list;
@@ -22,20 +23,27 @@ export default function CheckoutShipping() {
     e.preventDefault();
     if (!elements || !stripe) return;
 
-    const { error } = await elements.submit();
-    const addressInfo = elements.getElement("address");
-    if (error || !addressInfo) return;
+    try {
+      const { error } = await elements.submit();
+      const addressInfo = elements.getElement("address");
 
-    const { value } = await addressInfo.getValue();
-    const { firstName, lastName, phone, address } = value;
+      if (error || !addressInfo) return;
 
-    await checkoutCtx.addNewAddress({
-      first_name: firstName ?? "", // validated in address options on stripe element
-      last_name: lastName ?? "", // validated in address options on stripe element
-      phone_number: phone ?? "", // validated in address options on stripe element
-      ...address,
-      is_default: isDefault,
-    });
+      const { value } = await addressInfo.getValue();
+      const { firstName, lastName, phone, address } = value;
+
+      await checkoutCtx.addNewAddress({
+        first_name: firstName ?? "", // validated in address options on stripe element
+        last_name: lastName ?? "", // validated in address options on stripe element
+        phone_number: phone ?? "", // validated in address options on stripe element
+        ...address,
+        is_default: isDefault,
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Error Confirming Shipping Address", error);
+      setConfirmingPM(false);
+    }
 
     updateToggles("address_form", false);
   }
@@ -45,8 +53,9 @@ export default function CheckoutShipping() {
       case formToggles.address_form:
         return (
           <StripeAddress
+            isLoading={confirmingShipping}
             btnText="Save & Continue"
-            setDefault={setIsDefault}
+            setToDefault={setIsDefault}
             onSubmit={handleOnSubmit}
             onCancel={() => updateToggles("address_form", false)}
           />
@@ -59,7 +68,7 @@ export default function CheckoutShipping() {
   };
 
   return (
-    <Card id="shipping_address" isDisabled={paymentFormOpen}>
+    <Card id="shipping_address" className="overflow-visible" isDisabled={paymentFormOpen}>
       <CardHeader>
         <div className="flex justify-between w-full">
           <div id="address_form" className="text-lg font-medium flex gap-x-2 items-center">
@@ -80,7 +89,7 @@ export default function CheckoutShipping() {
       <div className="px-4">
         <Divider />
       </div>
-      <CardBody>{renderCardBody()}</CardBody>
+      <CardBody className="overflow-visible">{renderCardBody()}</CardBody>
     </Card>
   );
 }
