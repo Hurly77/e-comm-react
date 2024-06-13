@@ -1,6 +1,6 @@
 import { CartItemModel } from "@/lib/sdk/models/CartItemModel";
 import { Button, Image } from "@nextui-org/react";
-import { toUSD } from "../../helpers/number";
+import { toUSD } from "../../../app/helpers/number-helpers";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { QuantitySelect } from "@/components/common/Select/QuantitySelect";
 import { useCart } from "../../hooks/useCart";

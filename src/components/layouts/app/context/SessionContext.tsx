@@ -48,10 +48,14 @@ export default function SessionContextProvider({ children }: SessionContextProvi
   // For Session, not need now but can be added later
   async function signUp(payload: AuthSignup) {
     setLoading(); // default to true
-    const { data } = await auth.signUp(payload);
+    const { data, error } = await auth.signUp(payload);
 
     if (data?.session) setSession(data?.session);
     setLoading(false);
+
+    if (error) {
+      return error as { message: string | string[] };
+    }
   }
 
   React.useEffect(() => {

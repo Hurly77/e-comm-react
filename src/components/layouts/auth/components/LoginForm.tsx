@@ -19,12 +19,7 @@ export default function LoginForm({ isAdmin }: { isAdmin: boolean }) {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let isLogin = false;
-    if (isAdmin) {
-      isLogin = await auth.login({ ...credentials, role: isAdmin ? "admin" : "customer" });
-    } else {
-      isLogin = await auth.login({ ...credentials, role: isAdmin ? "admin" : "customer" });
-    }
+    const isLogin = await auth.login({ ...credentials, role: isAdmin ? "admin" : "customer" });
 
     if (!isLogin) {
       setError("Email or Password is incorrect. Please try again.");
@@ -40,12 +35,14 @@ export default function LoginForm({ isAdmin }: { isAdmin: boolean }) {
   }
 
   return (
-    <form className="flex flex-col space-y-3 w-full" onSubmit={onSubmit}>
-      <div>{error && <span className="text-danger">{error}</span>}</div>
-      <div className="px-4 space-y-4 py-4">
+    <form className="flex flex-col space-y-3 w-full pb-4" onSubmit={onSubmit}>
+      <div>{error && <span className="text-danger text-sm">{error}</span>}</div>
+      <div className="space-y-4">
         <Input
           type="text"
           name="email"
+          radius="sm"
+          variant="bordered"
           onChange={onChangeHandler}
           value={credentials?.email}
           label={LOGIN_FORM.INPUTS.EMAIL.LABEL}
@@ -53,25 +50,41 @@ export default function LoginForm({ isAdmin }: { isAdmin: boolean }) {
         />
         <Input
           name="password"
+          radius="sm"
+          variant="bordered"
           type={passwordVisible ? "text" : "password"}
           onChange={onChangeHandler}
           label={LOGIN_FORM.INPUTS.PASSWORD.LABEL}
           placeholder={LOGIN_FORM.INPUTS.PASSWORD.PLACEHOLDER}
           endContent={
             passwordVisible ? (
-              <EyeIcon className="h-5 w-5 cursor-pointer" onClick={() => setPasswordVisible(!passwordVisible)} />
+              <EyeIcon
+                className="h-6 w-6 cursor-pointer stroke-primary"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+              />
             ) : (
-              <EyeSlashIcon className="h-5 w-5 cursor-pointer" onClick={() => setPasswordVisible(!passwordVisible)} />
+              <EyeSlashIcon
+                className="h-6 w-6 stroke-primary cursor-pointer"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+              />
             )
           }
         />
       </div>
 
-      <div className="flex justify-between w-full">
-        <Button onClick={() => router.push(isAdmin ? "/auth/admin/create-account" : "/auth/create-account")}>
+      <div className="flex justify-between w-full gap-4">
+        <Button
+          radius="sm"
+          variant="ghost"
+          color="primary"
+          className="w-full"
+          onClick={() => router.push(isAdmin ? "/auth/admin/create-account" : "/auth/create-account")}
+        >
           Create New
         </Button>
-        <Button type="submit">Login</Button>
+        <Button radius="sm" color="primary" className="w-full" type="submit">
+          Login
+        </Button>
       </div>
     </form>
   );

@@ -13,6 +13,26 @@ export default function NavigationAccountDropdown(props: NavigationAccountDropdo
   const { logout } = useSession();
   const [isOpen, setIsOpen] = React.useState(false);
 
+  const dropDownItems = [
+    {
+      id: "acc-menu--index",
+      text: "Account",
+      href: "/account",
+    },
+    {
+      id: "acc-menu-orders",
+      text: "Orders",
+      href: "/account/orders",
+    },
+    {
+      id: "menu-logout",
+      text: "Logout",
+      href: "",
+      onClick: logout,
+      color: "danger" as const,
+    },
+  ];
+
   return (
     <Dropdown isOpen={isOpen} onOpenChange={setIsOpen}>
       <DropdownTrigger>
@@ -25,17 +45,17 @@ export default function NavigationAccountDropdown(props: NavigationAccountDropdo
         </Button>
       </DropdownTrigger>
       <DropdownMenu>
-        <DropdownItem onClick={logout}>Logout</DropdownItem>
-        <DropdownItem>Account</DropdownItem>
-        <DropdownItem
-          color="primary"
-          variant="light"
-          className="border-b last:border-none text-xl"
-          href="/account/orders"
-          onClick={(e) => e.preventDefault()}
-        >
-          Orders
-        </DropdownItem>
+        {dropDownItems.map(({ id, href, text, color, onClick }) => (
+          <DropdownItem
+            key={id}
+            color={color}
+            variant="solid"
+            href={href}
+            onClick={onClick ? onClick : (e) => e.preventDefault()}
+          >
+            {text}
+          </DropdownItem>
+        ))}
       </DropdownMenu>
     </Dropdown>
   );

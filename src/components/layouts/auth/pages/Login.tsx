@@ -7,7 +7,7 @@ import LoginForm from "../components/LoginForm";
 export default function Login({ isAdmin }: { isAdmin: boolean }) {
   return (
     <>
-      <AuthFormWrapper title={isAdmin ? "Admin Login" : "Title"} subTitle="Login">
+      <AuthFormWrapper title={isAdmin ? "Admin Login" : "Login"} subTitle="Login">
         <LoginForm isAdmin={isAdmin} />
       </AuthFormWrapper>
     </>

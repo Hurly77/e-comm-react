@@ -3,8 +3,8 @@ import { useCart } from "../../hooks/useCart";
 import { Spinner } from "@nextui-org/react";
 import CartOrderSummary from "./CartOrderSummary";
 import CartItemList from "./CartItemList";
-import { toUSD } from "../../helpers/number";
-import { getSubtotal, getNumOfItems } from "../../helpers/cart-helpers";
+import { toUSD } from "../../../app/helpers/number-helpers";
+import { getSubtotal, getNumOfItems } from "../../../app/helpers/cart-helpers";
 
 export default function Cart() {
   const { cart, isEmpty, isLoading } = useCart();

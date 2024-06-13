@@ -4,8 +4,12 @@ import React from "react";
 import ProductPrice from "../Product/ProductPrice";
 import { QuantitySelect } from "@/components/common/Select/QuantitySelect";
 import Drawer from "../Drawer/Drawer";
+import useSession from "@/components/layouts/app/hooks/useSession";
+import { useRouter } from "next/router";
 
 export default function CartDrawer() {
+  const router = useRouter();
+  const { session } = useSession();
   const { cart, addItem, updateItem, preProcessingItem, drawerOpenStates, isUpdating } = useCart();
   const [isOpen, setIsOpen] = drawerOpenStates;
 
@@ -29,7 +33,21 @@ export default function CartDrawer() {
               <ProductPrice price={preProcessingItem.price} regularPrice={preProcessingItem.regularPrice} />
             </div>
           </div>
-          {!includesItem ? (
+          {!session?.user ? (
+            <div>
+              <p className="text-foreground-400 text-center py-2">Have an Account Login to add to Cart</p>
+              <Button
+                radius="sm"
+                color="primary"
+                className="w-full font-medium text-md"
+                onPress={() => router.push(`/auth/login?cart_item=${preProcessingItem.id}`)}
+                endContent={isUpdating && <Spinner color="white" size="sm" />}
+                isDisabled={isUpdating}
+              >
+                Login
+              </Button>
+            </div>
+          ) : !includesItem ? (
             <Button
               onPress={() => {
                 addItem(preProcessingItem.id, 1);

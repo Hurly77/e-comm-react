@@ -1,10 +1,9 @@
 import type { ReactElement } from "react";
 
-import MainLayout from "@/components/layouts/main";
-
 import { NextPageWithLayout } from "../../_app";
 import { useRouter } from "next/router";
-import SingleOrderPage from "@/components/layouts/main/pages/SingleOrderPage";
+import SingleOrderPage from "@/layouts/main/pages/SingleOrderPage";
+import AccountLayout from "@/layouts/account";
 
 export const OrderItem: NextPageWithLayout = () => {
   const router = useRouter();
@@ -15,7 +14,7 @@ export const OrderItem: NextPageWithLayout = () => {
 
 OrderItem.title = "Account: Order Details";
 OrderItem.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return <AccountLayout>{page}</AccountLayout>;
 };
 
 export default OrderItem;

@@ -1,9 +1,8 @@
 import type { ReactElement } from "react";
 
-import MainLayout from "@/components/layouts/main";
-
 import { NextPageWithLayout } from "../../_app";
-import OrdersPage from "@/components/layouts/main/pages/OrdersPage";
+import OrdersPage from "@/layouts/main/pages/OrdersPage";
+import AccountLayout from "@/layouts/account";
 
 export const Order: NextPageWithLayout = () => {
   return <OrdersPage />;
@@ -11,7 +10,7 @@ export const Order: NextPageWithLayout = () => {
 
 Order.title = "Account: Orders";
 Order.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return <AccountLayout>{page}</AccountLayout>;
 };
 
 export default Order;
