@@ -1,8 +1,8 @@
 import { Accordion, AccordionItem, Button } from "@nextui-org/react";
 import { useCart } from "../../hooks/useCart";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
-import { toUSD } from "../../../app/helpers/number-helpers";
-import { getNumOfItems, getSubtotal } from "../../../app/helpers/cart-helpers";
+import { toUSD } from "../../helpers/number";
+import { getNumOfItems, getSubtotal } from "../../helpers/cart-helpers";
 import { useRouter } from "next/router";
 
 export default function CartOrderSummary() {

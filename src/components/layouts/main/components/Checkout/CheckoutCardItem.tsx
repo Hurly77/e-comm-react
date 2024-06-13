@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { Image } from "@nextui-org/react";
-import { getCardBrandImage } from "../../../app/helpers/card-brands";
+import { getCardBrandImage } from "../../helpers/card-brands";
 
 export default function CheckoutCardItem({
   size,

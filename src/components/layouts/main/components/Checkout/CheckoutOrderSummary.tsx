@@ -1,7 +1,7 @@
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { Button, Card, Divider } from "@nextui-org/react";
-import { getNumOfItems, getSubtotal } from "../../../app/helpers/cart-helpers";
-import { toUSD } from "../../../app/helpers/number-helpers";
+import { getNumOfItems, getSubtotal } from "../../helpers/cart-helpers";
+import { toUSD } from "../../helpers/number";
 import { useCart } from "../../hooks/useCart";
 import { CheckoutContext } from "../../context/CheckoutContext";
 import React from "react";
