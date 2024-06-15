@@ -28,16 +28,16 @@ export function Slingshot<T extends Array<unknown>>(props: SlingShortT<T>) {
     const scrollWidth = listRef.current?.scrollWidth;
     const clientWidth = listRef.current?.clientWidth;
     // if scrollWidth isn't equal to clientWidth, then it's scrollable
-    const canScroll = !(scrollWidth === clientWidth);
+    const canScroll = scrollWidth !== clientWidth && items.length > 0;
 
     if (isScrollable !== canScroll) setIsScrollable(canScroll);
-  }, [isScrollable, isSlingshot]);
+  }, [isScrollable, isSlingshot, items.length]);
 
   React.useEffect(() => {
-    if (listRef.current?.scrollLeft !== undefined) {
-      const scrollLeft = listRef.current.scrollLeft;
-      const scrollRight = listRef.current.scrollWidth - (scrollLeft + listRef.current.clientWidth);
+    const scrollLeft = listRef?.current?.scrollLeft;
+    const scrollRight = (listRef?.current?.scrollWidth ?? 0) - (scrollLeft ?? 0 + (listRef?.current?.clientWidth ?? 0));
 
+    if (scrollLeft !== undefined) {
       setChevronVisibility({
         left: scrollLeft > 0,
         right: scrollRight > 0,
@@ -61,7 +61,7 @@ export function Slingshot<T extends Array<unknown>>(props: SlingShortT<T>) {
 
   return (
     <div className="flex flex-col items-center relative">
-      <div ref={listRef} className={cls(className ?? "", "w-fit gap-2 gap-y-4 py-4")}>
+      <div id="slingshot-list" ref={listRef} className={cls(className ?? "", "w-fit gap-2 gap-y-4 py-4")}>
         {items.map((item, index) => renderItem(item, index))}
       </div>
 
