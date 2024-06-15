@@ -22,7 +22,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
               </div>
             }
           >
-            <div className="flex grow justify-center w-full">{children}</div>
+            <div className="flex grow w-full overflow-y-auto">
+              <div className="flex grow min-h-full h-fit justify-center w-full">{children}</div>
+            </div>
             <CartDrawer />
           </ErrorBoundary>
         </div>
