@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /*=======Border Testing ===========*/
+  /*========== Red (1,2,4) ================= */
+  .tb1-red {
+    @apply border border-red-500;
+  }
+
+  .tb2-red {
+    @apply border-2 border-red-500;
+  }
+
+  .tb4-red {
+    @apply border-4 border-red-500;
+  }
+
+  .tb8-red {
+    @apply border-8 border-red-500;
+  }
+
+  /*========== Blue (1,2,4) ================= */
+  .tb1-blu {
+    @apply border border-blue-500;
+  }
+
+  .tb2-blu {
+    @apply border-2 border-blue-500;
+  }
+
+  .tb4-blu {
+    @apply border-4 border-blue-500;
+  }
+
+  .tb8-blu {
+    @apply border-8 border-blue-500;
+  }
+
+  /*========== Green (1,2,4) ================= */
+  .tb1-grn {
+    @apply border border-green-500;
+  }
+
+  .tb2-grn {
+    @apply border-2 border-green-500;
+  }
+
+  .tb4-grn {
+    @apply border-4 border-green-500;
+  }
+
+  .tb8-grn {
+    @apply border-8 border-green-500;
+  }
+
+  /*========== Yellow (1,2,4) ================= */
+
+  .tb1-yel {
+    @apply border border-yellow-500;
+  }
+
+  .tb2-yel {
+    @apply border-2 border-yellow-500;
+  }
+
+  .tb4-yel {
+    @apply border-4 border-yellow-500;
+  }
+  .tb8-yel {
+    @apply border-8 border-yellow-500;
+  }
+}
