@@ -14,6 +14,10 @@ declare type AuthUser = {
   first_name: string;
   last_name: string;
   role: AuthUserRole;
+  phone_number: string;
+  stripe_customer_id: string;
+  updated_at: string;
+  created_at: string;
   googleId: null;
   provider: string;
 };
