@@ -8,14 +8,14 @@ import SkeletonList from "../components/Product/SkeletonList";
 import SkeletonBubbles from "../components/Product/SkeletonBubbles";
 
 export default function HomePage() {
-  const { categories } = useCategories();
-  const { products } = useProducts();
+  const { categories, isLoading: isLoadingCategories } = useCategories();
+  const { products, isLoading } = useProducts();
 
   return (
     <div className="page items-center flex-col">
       <Link href="/categories/all">All Categories</Link>
-      {categories ? <CategoriesList categories={categories ?? []} /> : <SkeletonBubbles size={12} />}
-      {categories ? <ProductList products={products ?? []} style="scroll-list" /> : <SkeletonList size={5} />}
+      {!isLoadingCategories ? <CategoriesList categories={categories ?? []} /> : <SkeletonBubbles size={12} />}
+      {!isLoading ? <ProductList products={products ?? []} style="scroll-list" /> : <SkeletonList size={5} />}
     </div>
   );
 }
