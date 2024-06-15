@@ -24,7 +24,7 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
-    <Navbar maxWidth="2xl" className="shadow sticky top-0">
+    <Navbar maxWidth="xl" className="shadow sticky top-0">
       <NavbarContent justify="center" className="sm:gap-0 gap-x-6">
         <NavbarMenuToggle
           onClick={() => setIsMenuOpen(!isMenuOpen)}
