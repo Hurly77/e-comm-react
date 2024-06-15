@@ -1,13 +1,15 @@
-import { Balthazar } from "next/font/google";
+import { Roboto_Flex } from "next/font/google";
+
+const Roboto = Roboto_Flex({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  style: ["normal"],
+  subsets: ["latin-ext"],
+  variable: "--font-sans",
+});
+
 import React from "react";
 
 import { cls } from "../helpers/twind-helpers";
-
-const balthazar = Balthazar({
-  weight: ["400"],
-  subsets: ["latin"],
-  variable: "--font-balthazar",
-});
 
 export type AppContextProviderT = {
   children?: React.ReactNode;
@@ -58,7 +60,7 @@ export default function AppContextProvider({ children }: AppContextProviderT) {
 
   return (
     <AppContext.Provider value={value}>
-      <div className={cls(theme, "app", balthazar.variable)}>{children}</div>
+      <div className={cls(theme, "app", Roboto.className)}>{children}</div>
     </AppContext.Provider>
   );
 }
