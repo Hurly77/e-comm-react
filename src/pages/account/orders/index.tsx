@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 
 import { NextPageWithLayout } from "../../_app";
 import OrdersPage from "@/layouts/main/pages/OrdersPage";
-import AccountLayout from "@/layouts/account";
+import MainLayout from "@/components/layouts/main";
 
 export const Order: NextPageWithLayout = () => {
   return <OrdersPage />;
@@ -10,7 +10,7 @@ export const Order: NextPageWithLayout = () => {
 
 Order.title = "Account: Orders";
 Order.getLayout = function getLayout(page: ReactElement) {
-  return <AccountLayout>{page}</AccountLayout>;
+  return <MainLayout>{page}</MainLayout>;
 };
 
 export default Order;
