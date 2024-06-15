@@ -1,4 +1,4 @@
-import { getProductsByCategory as method } from "@/lib/sdk/methods";
+import { getProductsByCategory as method } from "@/sdk/methods";
 import useSWR from "swr";
 
 export function useProductByCategory(categoryId: string | undefined) {

@@ -6,7 +6,7 @@ import React from "react";
 import { CheckoutContext } from "../../context/CheckoutContext";
 import CheckoutSelectedCard from "./CheckoutCardItem";
 import CheckoutCardList from "./CheckoutCardList";
-import { getSetupIntent, updateUserDefaultPm } from "@/lib/sdk/methods";
+import { getSetupIntent, updateUserDefaultPm } from "@/sdk/methods";
 
 export default function CheckoutPayment() {
   const checkoutCtx = React.useContext(CheckoutContext);

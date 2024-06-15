@@ -16,7 +16,6 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/app/*": ["./src/components/layouts/app/*"],
-      "@/methods/*": ["./src/lib/sdk/methods/*"],
       "@/layouts/*": ["./src/components/layouts/*"],
       "@/sdk/*": ["./src/lib/sdk/*"]
     }

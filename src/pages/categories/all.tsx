@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import AllCategories from "@/layouts/main/pages/AllCategories";
+import AllCategories from "@/layouts/main/pages/Category/AllCategories";
 
 import MainLayout from "@/components/layouts/main";
 

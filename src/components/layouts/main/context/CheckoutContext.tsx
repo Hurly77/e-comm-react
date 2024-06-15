@@ -1,4 +1,4 @@
-import { createUserShippingAddress, CreateUserShippingAddr } from "@/lib/sdk/methods";
+import { createUserShippingAddress, CreateUserShippingAddr } from "@/sdk/methods";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe, Stripe, StripeElementsOptions } from "@stripe/stripe-js";
 import React from "react";

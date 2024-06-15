@@ -4,7 +4,7 @@ import MainLayout from "@/components/layouts/main";
 
 import { NextPageWithLayout } from "../_app";
 import { useRouter } from "next/router";
-import ProductPage from "@/layouts/main/pages/ProductPage";
+import ProductPage from "@/layouts/main/pages/Product/ProductPage";
 
 export const Product: NextPageWithLayout = () => {
   const router = useRouter();

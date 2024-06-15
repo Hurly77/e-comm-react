@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { getCategories } from "@/lib/sdk/methods";
+import { getCategories } from "@/sdk/methods";
 
 export default function useCategories() {
   const { data, error } = useSWR("categories", getCategories);

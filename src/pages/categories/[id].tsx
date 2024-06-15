@@ -4,7 +4,7 @@ import MainLayout from "@/components/layouts/main";
 
 import { NextPageWithLayout } from "../_app";
 import { useRouter } from "next/router";
-import CategoryPage from "@/components/layouts/main/pages/CategoryPage";
+import CategoryPage from "@/layouts/main/pages/Category/CategoryPage";
 
 export const Category: NextPageWithLayout = () => {
   const router = useRouter();

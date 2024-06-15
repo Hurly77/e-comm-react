@@ -1,7 +1,7 @@
 import React from "react";
 import useSWR from "swr";
 import useSession from "../../app/hooks/useSession";
-import { getCart, createCartItem, deleteCartItem, updateCartItem } from "@/lib/sdk/methods";
+import { getCart, createCartItem, deleteCartItem, updateCartItem } from "@/sdk/methods";
 import { CartModel } from "@/lib/sdk/models/CartModel";
 import { ProductModel } from "@/lib/sdk/models/ProductModel";
 

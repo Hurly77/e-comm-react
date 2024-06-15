@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { getOrderById, getOrders } from "@/lib/sdk/methods";
+import { getOrderById, getOrders } from "@/sdk/methods";
 
 export function useUserOrders(userId?: number) {
   const fetcher = (userId?: number) => (userId ? getOrders(userId) : undefined);

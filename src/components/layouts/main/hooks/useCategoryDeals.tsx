@@ -1,4 +1,4 @@
-import { getCategoryDeals } from "@/lib/sdk/methods";
+import { getCategoryDeals } from "@/sdk/methods";
 import useSWR from "swr";
 
 export function useCategoryDeals() {

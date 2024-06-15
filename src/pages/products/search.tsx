@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 import MainLayout from "@/components/layouts/main";
 
 import { NextPageWithLayout } from "../_app";
-import ProductSearchPage from "@/components/layouts/main/pages/ProductSearchPage";
+import ProductSearchPage from "@/layouts/main/pages/Product/ProductSearchPage";
 
 export const ProductSearch: NextPageWithLayout = () => {
   return <ProductSearchPage />;

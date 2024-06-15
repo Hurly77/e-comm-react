@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from "react";
 import { CheckoutContext } from "../../context/CheckoutContext";
-import Drawer from "../Drawer/Drawer";
+import Drawer from "../Shared/Drawer";
 import CheckoutConfirmOrder from "./CheckoutConfirmOrder";
 
 export default function CheckoutDrawer() {

@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 import MainLayout from "@/components/layouts/main";
 
 import { NextPageWithLayout } from "../_app";
-import CheckoutStatusPage from "@/components/layouts/main/pages/CheckoutStatusPage";
+import CheckoutStatusPage from "@/layouts/main/pages/Checkout/CheckoutStatusPage";
 export const CheckoutStatus: NextPageWithLayout = () => {
   return <CheckoutStatusPage />;
 };

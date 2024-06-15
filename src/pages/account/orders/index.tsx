@@ -1,16 +1,16 @@
 import type { ReactElement } from "react";
 
 import { NextPageWithLayout } from "../../_app";
-import OrdersPage from "@/layouts/main/pages/OrdersPage";
+import AccountOrdersPage from "@/layouts/main/pages/Account/AccountOrdersPage";
 import MainLayout from "@/components/layouts/main";
 
-export const Order: NextPageWithLayout = () => {
-  return <OrdersPage />;
+export const AccountOrders: NextPageWithLayout = () => {
+  return <AccountOrdersPage />;
 };
 
-Order.title = "Account: Orders";
-Order.getLayout = function getLayout(page: ReactElement) {
+AccountOrders.title = "Account: Orders";
+AccountOrders.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };
 
-export default Order;
+export default AccountOrders;

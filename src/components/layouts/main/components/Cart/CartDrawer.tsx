@@ -3,7 +3,7 @@ import { useCart } from "../../hooks/useCart";
 import React from "react";
 import ProductPrice from "../Product/ProductPrice";
 import { QuantitySelect } from "@/components/common/Select/QuantitySelect";
-import Drawer from "../Drawer/Drawer";
+import Drawer from "../Shared/Drawer";
 import useSession from "@/components/layouts/app/hooks/useSession";
 import { useRouter } from "next/router";
 

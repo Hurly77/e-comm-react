@@ -1,4 +1,4 @@
-import { getCategoryById } from "@/lib/sdk/methods";
+import { getCategoryById } from "@/sdk/methods";
 import useSWR from "swr";
 
 export function useCategory(id: string | number) {

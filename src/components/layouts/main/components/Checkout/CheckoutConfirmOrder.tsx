@@ -8,9 +8,9 @@ import { Badge, Button, Divider, Image, Spinner } from "@nextui-org/react";
 import { toUSD } from "../../helpers/number";
 import { getNumOfItems, getSubtotal } from "../../helpers/cart-helpers";
 import useSession from "@/components/layouts/app/hooks/useSession";
-import { createPaymentIntent } from "@/lib/sdk/methods";
+import { createPaymentIntent } from "@/sdk/methods";
 import { useStripe } from "@stripe/react-stripe-js";
-import { createOrder } from "@/lib/sdk/methods/create-order";
+import { createOrder } from "@/sdk/methods";
 
 export default function CheckoutDrawer() {
   const stripe = useStripe();

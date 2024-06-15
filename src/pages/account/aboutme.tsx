@@ -2,15 +2,15 @@ import type { ReactElement } from "react";
 
 import { NextPageWithLayout } from "../_app";
 import MainLayout from "@/components/layouts/main";
-import AccountPage from "@/components/layouts/main/pages/Account/AccountPage";
+import AccountAboutMePage from "@/layouts/main/pages/Account/AccountAboutMePage";
 
-export const Account: NextPageWithLayout = () => {
-  return <AccountPage />;
+export const AccountAboutMe: NextPageWithLayout = () => {
+  return <AccountAboutMePage />;
 };
 
-Account.title = "Account: Home";
-Account.getLayout = function getLayout(page: ReactElement) {
+AccountAboutMe.title = "Account: About Me";
+AccountAboutMe.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };
 
-export default Account;
+export default AccountAboutMe;

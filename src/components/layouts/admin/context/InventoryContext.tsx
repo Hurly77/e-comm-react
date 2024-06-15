@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { getProducts as method, GET_PRODUCTS, createProduct, deleteProduct } from "@/lib/sdk/methods";
+import { getProducts as method, GET_PRODUCTS, createProduct, deleteProduct } from "@/sdk/methods";
 
 import React from "react";
 import { ProductModel } from "@/lib/sdk/models/ProductModel";

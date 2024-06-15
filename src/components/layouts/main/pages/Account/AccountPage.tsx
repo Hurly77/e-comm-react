@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
 
-import useSession from "../../../app/hooks/useSession";
-import { formatDate } from "../../helpers/date";
+import useSession from "@/app/hooks/useSession";
+import { formatDate } from "@/layouts/main/helpers/date";
 import React from "react";
-import PaymentMethodCard from "../../components/Shared/PaymentMethodCard";
+import PaymentMethodCard from "@/layouts/main/components/Shared/PaymentMethodCard";
 import { HomeIcon, UserIcon } from "@heroicons/react/24/solid";
 import { getAccountInfo } from "@/lib/sdk/fetchers/account-info-fetcher";
 import useSWR from "swr";
-import AddressDisplay from "../../components/Shared/AddressDisplay";
-import AccountCard from "../../components/Account/AccountCard";
-import AccountPurchaseHistory from "../../components/Account/AccountPurchaseHistory";
-import AccountSkeleton from "../../components/Account/AccountSkeleton";
+import AddressDisplay from "@/layouts/main/components/Shared/AddressDisplay";
+import AccountCard from "@/layouts/main/components/Account/AccountCard";
+import AccountPurchaseHistory from "@/layouts/main/components/Account/AccountPurchaseHistory";
+import AccountSkeleton from "@/layouts/main/components/Account/AccountSkeleton";
 
 export default function AccountPage() {
   const { session } = useSession();

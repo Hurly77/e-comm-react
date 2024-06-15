@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { getProductById as method } from "@/lib/sdk/methods";
+import { getProductById as method } from "@/sdk/methods";
 
 export default function useProducts(id: string | undefined) {
   const fetcher = () => (id ? method(id) : null);

@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { getProducts as method, GET_PRODUCTS } from "@/lib/sdk/methods";
+import { getProducts as method, GET_PRODUCTS } from "@/sdk/methods";
 import React from "react";
 
 interface ProductFilters {
