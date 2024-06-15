@@ -74,7 +74,7 @@ export default function SessionContextProvider({ children }: SessionContextProvi
         logout();
       },
     });
-    () => timer.cleanUp();
+    return () => timer.cleanUp();
   }, [logout]);
 
   React.useEffect(() => {
