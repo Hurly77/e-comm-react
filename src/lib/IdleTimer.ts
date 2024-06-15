@@ -4,6 +4,11 @@ export type IdleTimerConstructor = {
   onExpired: (() => void) | (() => null);
 };
 
+// The purpose of this class is to track user inactivity,
+// it sets up event listeners for mousemove, scroll, and keydown
+// if user doesn't interact with the page in the specified time
+// the onTimeout callback is called
+// onExpired made of the purpose of logging out the user if a token like a jwt expires
 export default class IdleTimer {
   timeout: number;
   onTimeout: (() => void) | (() => null);
@@ -39,7 +44,9 @@ export default class IdleTimer {
       const expiredTime = parseInt(localStorage.getItem("_expiredTime") || "0", 10);
       const expiredToken = parseInt(localStorage.getItem("_expiredToken") || "0", 10);
       const isExpiredToken = expiredToken > 0 && expiredToken < Date.now();
-      const isInActiveUser = expiredTime < Date.now();
+      // checking if expiredTime is 0, is to prevent race condition
+      // where the Clean Near the same time the interval fires
+      const isInActiveUser = expiredTime < Date.now() && expiredTime != 0;
 
       if (isInActiveUser && this.onTimeout) {
         this.onTimeout();
