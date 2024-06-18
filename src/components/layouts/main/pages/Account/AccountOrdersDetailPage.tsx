@@ -1,10 +1,12 @@
 import useSession from "@/app/hooks/useSession";
-import { BreadcrumbItem, Breadcrumbs, Image } from "@nextui-org/react";
+import { Image } from "@nextui-org/react";
 import { formatDate } from "@/layouts/main/helpers/date";
 import { toUSD } from "@/layouts/main/helpers/number";
 import { useSingleOrder } from "@/layouts/main/hooks/useUserOrders";
 import { getCardBrandImage } from "@/layouts/main/helpers/card-brands";
 import OrderItemList from "@/layouts/main/components/Order/OrderItemList";
+import EShopBreadcrumbs from "../../components/Shared/EShopBreadcrumbs";
+import { ACCOUNT_BREAD_CRUMBS } from "../../constants/nav";
 
 export default function AccountOrdersDetailPage({ id }: { id?: number }) {
   const { session } = useSession();
@@ -79,11 +81,15 @@ export default function AccountOrdersDetailPage({ id }: { id?: number }) {
     <div className="flex items-center flex-col p-6 w-full">
       <div className="w-full max-w-screen-lg space-y-4">
         <div>
-          <Breadcrumbs>
-            <BreadcrumbItem href="/account">Your Account</BreadcrumbItem>
-            <BreadcrumbItem href="/account/orders">Orders</BreadcrumbItem>
-            <BreadcrumbItem href={`/account/orders/${id}`}>Order {id}</BreadcrumbItem>
-          </Breadcrumbs>
+          <EShopBreadcrumbs
+            breadcrumbs={[
+              ...ACCOUNT_BREAD_CRUMBS["orders"],
+              {
+                label: `Order #${id}`,
+                href: `/account/orders/${id}a`,
+              },
+            ]}
+          />
         </div>
         <div>
           <div className="">

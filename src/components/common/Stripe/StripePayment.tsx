@@ -5,22 +5,37 @@ import { StripeElementProps } from "./types";
 
 export interface StripePaymentT extends StripeElementProps {}
 
-export default function StripePayment({ onSubmit, setToDefault, onCancel, btnText, isLoading }: StripePaymentT) {
+export default function StripePayment({
+  onSubmit,
+  setToDefault,
+  onCancel,
+  children,
+  btnText,
+  isLoading,
+}: StripePaymentT) {
   const [isReady, setIsReady] = React.useState(false);
 
   return (
     <form className="space-y-4 grow" onSubmit={onSubmit}>
-      <PaymentElement
-        options={{
-          layout: {
-            type: "tabs",
-            radios: true,
-          },
-        }}
-        onReady={() => setIsReady(true)}
-      />
+      <div className="sticky top-0 z-10 bg-background">
+        <PaymentElement
+          options={{
+            fields: {
+              billingDetails: {
+                address: "never",
+              },
+            },
+            layout: {
+              type: "tabs",
+              radios: true,
+            },
+          }}
+          onReady={() => setIsReady(true)}
+        />
+      </div>
       {isReady && (
         <>
+          {children && <div>{children}</div>}
           <Checkbox onValueChange={setToDefault}>set as default</Checkbox>
           <div className="flex items-center gap-4">
             <Button

@@ -79,7 +79,7 @@ export default function ProductCard({ product, size }: ProductCardT) {
           radius="sm"
           color={"primary"}
           className={cls(size === "sm" ? "w-full" : "")}
-          onPress={() => preProcessCartItem(product)}
+          onClick={() => preProcessCartItem(product)}
         >
           Add to cart
         </Button>

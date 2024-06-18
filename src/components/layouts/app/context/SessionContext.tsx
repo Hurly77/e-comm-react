@@ -58,6 +58,20 @@ export default function SessionContextProvider({ children }: SessionContextProvi
     }
   }
 
+  async function updateUser(user: Partial<AuthUser>) {
+    if (session && session.user) {
+      const updateSession = {
+        ...session,
+        user: {
+          ...session.user,
+          ...user,
+        },
+      };
+      setSession(updateSession);
+      auth.setSession("", updateSession);
+    }
+  }
+
   React.useEffect(() => {
     const timer = new IdleTimer({
       timeout: 60 * 15,
@@ -109,6 +123,7 @@ export default function SessionContextProvider({ children }: SessionContextProvi
   }, [isValidating, router, session]);
 
   const value: SessionContextT = {
+    updateUser,
     login,
     logout,
     signUp,

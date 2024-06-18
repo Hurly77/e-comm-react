@@ -15,7 +15,7 @@ export default function AccountSkeleton() {
 
   return (
     <div className="w-full max-w-screen-xl space-y-4 bg-default-100">
-      <div className="flex items-center h-40 flex-col justify-center">
+      <div className="flex items-center h-40 flex-col justify-center account-img">
         <Skeleton className="h-9 w-60 rounded mb-1" />
         <Skeleton className="h-6 w-40 rounded" />
       </div>

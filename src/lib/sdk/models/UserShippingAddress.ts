@@ -10,4 +10,7 @@ export interface UserShippingAddress {
   state: string;
   postal_code: string;
   country: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string;
 }

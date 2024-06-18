@@ -12,7 +12,7 @@ export default function Checkout() {
         <CheckoutShipping />
         <CheckoutPayment />
       </div>
-      <div className="min-w-96 sticky top-20 h-fit">
+      <div className="min-w-96 sticky top-8 h-fit">
         <CheckoutOrderSummary />
       </div>
 

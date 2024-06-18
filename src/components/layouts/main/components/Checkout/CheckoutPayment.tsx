@@ -6,7 +6,7 @@ import React from "react";
 import { CheckoutContext } from "../../context/CheckoutContext";
 import CheckoutSelectedCard from "./CheckoutCardItem";
 import CheckoutCardList from "./CheckoutCardList";
-import { getSetupIntent, updateUserDefaultPm } from "@/sdk/methods";
+import { createSetupIntent, updatePaymentMetadata, updateUserDefaultPm } from "@/sdk/methods";
 
 export default function CheckoutPayment() {
   const checkoutCtx = React.useContext(CheckoutContext);
@@ -15,27 +15,48 @@ export default function CheckoutPayment() {
   const [confirmingPM, setConfirmingPM] = React.useState(false);
   const [isDefault, setIsDefault] = React.useState(false);
 
-  const { selectedPm, userId, formToggles, updateToggles } = checkoutCtx;
+  const { selectedPm, selectedAddress, userId, formToggles, updateToggles } = checkoutCtx;
   const addressOpen = formToggles.address_list || formToggles.address_form;
   const isPaymentOpen = formToggles.card_list || formToggles.card_form;
 
   async function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setConfirmingPM(true);
     if (!elements || !stripe) return;
     const { error } = await elements.submit();
     const element = elements.getElement("payment");
     if (error || !element) return;
 
     try {
-      const { client_secret: clientSecret } = (await getSetupIntent(checkoutCtx.userId)) ?? {};
+      setConfirmingPM(true);
+      if (!selectedAddress) return alert("Select a an Shipping Address to Continue");
+      const { client_secret: clientSecret } = (await createSetupIntent(checkoutCtx.userId)) ?? {};
       if (!clientSecret) return alert("Error Creating Setup Intent");
+
+      const billing_details = selectedAddress
+        ? {
+            name: `${selectedAddress.first_name} ${selectedAddress.last_name}`,
+            phone: selectedAddress.phone_number,
+            address: {
+              line1: selectedAddress.line1,
+              line2: selectedAddress.line2,
+              city: selectedAddress.city,
+              state: selectedAddress.state,
+              postal_code: selectedAddress.postal_code,
+              country: selectedAddress.country,
+            },
+          }
+        : undefined;
 
       const { error, setupIntent } = await stripe.confirmSetup({
         elements,
         clientSecret,
         redirect: "if_required",
-        confirmParams: { return_url: "http://localhost:3000/checkout" },
+        confirmParams: {
+          return_url: "http://localhost:3000/checkout",
+          payment_method_data: {
+            billing_details,
+          },
+        },
       });
 
       if (error) {
@@ -50,6 +71,15 @@ export default function CheckoutPayment() {
         updateUserDefaultPm(userId, pmId);
       }
 
+      if (typeof setupIntent?.payment_method === "string") {
+        updatePaymentMetadata(setupIntent?.payment_method, {
+          shipping_address_id: selectedAddress.id,
+        });
+      } else if (setupIntent.payment_method) {
+        updatePaymentMetadata(setupIntent.payment_method.id, {
+          shipping_address_id: selectedAddress.id,
+        });
+      }
       await checkoutCtx.mutate((prev) => prev);
       updateToggles("card_form", false);
     } catch (error) {

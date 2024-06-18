@@ -18,6 +18,7 @@ export default function AccountCard({ title, children, link, disablePress }: Acc
 
   return (
     <Card
+      shadow="sm"
       onPress={handleOnClick}
       classNames={{}}
       disableRipple

@@ -21,3 +21,32 @@ export function phoneParser(text: string) {
       return a;
     });
 }
+
+export function formatMMYY(text: string) {
+  if (!text) return "";
+
+  return text
+    .split(/[^0-9]/g) // Split all but numbers
+    .join("") // Join all numbers together
+    .replace(/(\d{0,2})(.*)/g, (match, p1, p2) => {
+      if (p1 && p2) {
+        // Full match
+        if (p1.length === 2 && (p1 === "10" || p1 === "11" || p1 === "12" || p1.match(/^0[1-9]$/))) {
+          return `${p1}/${p2}`;
+        }
+        if (p1.length === 1 && p1 >= 1 && p1 <= 9) {
+          return `${p1}/${p2}`;
+        }
+      }
+      if (p1) {
+        // Partial match for p1 only
+        if (p1.length === 2 && (p1 === "10" || p1 === "11" || p1 === "12" || p1.match(/^0[1-9]$/))) {
+          return `${p1}/`;
+        }
+        if (p1.length === 1 && p1 >= 1 && p1 <= 9) {
+          return `${p1}/`;
+        }
+      }
+      return match;
+    });
+}

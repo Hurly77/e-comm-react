@@ -16,7 +16,7 @@ export default function CheckoutPage() {
 
   return (
     <CheckoutContextProvider session={session}>
-      <div className="justify-center w-full flex pb-[400px]">
+      <div className="justify-center w-full flex pb-[400px] ">
         <Checkout />
       </div>
     </CheckoutContextProvider>

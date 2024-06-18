@@ -1,3 +1,5 @@
+import { UserShippingAddress } from "../../models/UserShippingAddress";
+
 export interface CreateUserShippingAddr {
   first_name: string;
   last_name: string;
@@ -9,4 +11,9 @@ export interface CreateUserShippingAddr {
   postal_code: string;
   country: string;
   phone_number: string;
+}
+
+export interface UserShippingAddressResponse {
+  addresses: UserShippingAddress[];
+  default_address_id: number | null;
 }

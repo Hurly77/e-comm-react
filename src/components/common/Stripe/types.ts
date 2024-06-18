@@ -4,4 +4,5 @@ export interface StripeElementProps {
   setToDefault?: (boolean: boolean) => void;
   btnText?: string;
   isLoading?: boolean;
+  children?: React.ReactNode;
 }

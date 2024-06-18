@@ -39,6 +39,7 @@ export default function CheckoutShipping() {
         ...address,
         is_default: isDefault,
       });
+      addressInfo.clear();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Error Confirming Shipping Address", error);

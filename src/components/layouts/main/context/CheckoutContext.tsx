@@ -55,19 +55,19 @@ export default function CheckoutContextProvider({ children, session }: CheckoutP
   const CACHE_KEY = `CHECKOUT_${userId}`;
   const { data, isLoading, isValidating, error, mutate } = useSWR(CACHE_KEY, () => checkoutFetcher(userId));
 
-  const { userShippingAddresses, paymentMethods, default_pm_id } = data ?? {};
+  const { addresses, paymentMethods, default_pm_id, default_address_id } = data ?? {};
 
   React.useEffect(() => {
-    if (!formToggles.address_form && userShippingAddresses?.length === 0) {
+    if (!formToggles.address_form && addresses?.length === 0) {
       setFormToggles({ ...formToggles, address_form: true });
     }
-  }, [formToggles, userShippingAddresses?.length]);
+  }, [formToggles, addresses?.length]);
 
   React.useEffect(() => {
-    if (!selectedAddress && userShippingAddresses?.length) {
+    if (!selectedAddress && addresses?.length) {
       // eslint-disable-next-line no-console
       console.log("Setting Selected Address");
-      setSelectedAddress(userShippingAddresses[0]);
+      setSelectedAddress(addresses?.find((addr) => addr.id === default_address_id) ?? addresses[0]);
     }
 
     if (!selectedPm && paymentMethods?.data?.length) {
@@ -76,14 +76,14 @@ export default function CheckoutContextProvider({ children, session }: CheckoutP
       const defaultPm = paymentMethods.data.find((pm) => pm.id === default_pm_id);
       setSelectedPm(defaultPm ? defaultPm : paymentMethods.data[0]);
     }
-  }, [data, default_pm_id, paymentMethods?.data, selectedAddress, selectedPm, userShippingAddresses]);
+  }, [data, default_pm_id, paymentMethods?.data, selectedAddress, selectedPm, addresses, default_address_id]);
 
   async function addNewAddress(address: CreateUserShippingAddr) {
     try {
       const response = await createUserShippingAddress(userId, address);
-      if (response && data && userShippingAddresses) {
+      if (response && data && addresses) {
         updateToggles("address_form", false);
-        await mutate({ ...data, userShippingAddresses: [...userShippingAddresses, response] });
+        await mutate({ ...data, addresses: [...addresses, response] });
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -123,7 +123,7 @@ export default function CheckoutContextProvider({ children, session }: CheckoutP
     isLoading,
     stripePromise,
     paymentMethods: data?.paymentMethods?.data ?? [],
-    shippingAddresses: userShippingAddresses ?? [],
+    shippingAddresses: addresses ?? [],
     checkoutDrawerStates: [checkoutDrawerOpen, setCheckoutDrawerOpen],
     selectedPm,
     selectedAddress,

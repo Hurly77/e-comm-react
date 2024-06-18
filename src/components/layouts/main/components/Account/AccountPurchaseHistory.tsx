@@ -16,7 +16,7 @@ export default function AccountPurchaseHistory({ orders }: { orders: OrderModel[
             <ShoppingBagIcon className="h-10 w-10 text-primary" />
             <span>Purchase History</span>
           </div>
-          <Link className="border" href="/account/orders">
+          <Link color="primary" className="whitespace-nowrap" href="/account/orders">
             View all
           </Link>
         </div>
@@ -29,19 +29,27 @@ export default function AccountPurchaseHistory({ orders }: { orders: OrderModel[
             const totalItems = order.items.reduce((a, b) => a + b.quantity, 0);
 
             return (
-              <div key={order.id} className="flex gap-4">
-                <div>
-                  <h1 className="text-2xl font-medium">{formatDate(order.order_date)}</h1>
+              <div key={order.id} className="flex gap-4 sm:flex-row flex-col">
+                <div className="w-fit">
+                  <h1 className="text-2xl font-medium w-max">{formatDate(order.order_date)}</h1>
                   <p className="text-foreground-400">
                     {toUSD(order.total_price)} • {totalItems} item
                   </p>
                 </div>
-                <div className="flex gap-1">
+                <div className="flex flex-wrap gap-1 grow">
                   {orderItemImages.map((img) => (
-                    <Image radius="sm" src={img} alt="order image" height={50} width={50} key={img} />
+                    <Image
+                      radius="sm"
+                      src={img}
+                      fallbackSrc="https://via.placeholder.com/50x50"
+                      alt="order image"
+                      height={50}
+                      width={50}
+                      key={img}
+                    />
                   ))}
                 </div>
-                <Link href={`/account/orders/${order.id}`} className="flex items-center">
+                <Link href={`/account/orders/${order.id}`} className="flex items-end">
                   View
                 </Link>
               </div>

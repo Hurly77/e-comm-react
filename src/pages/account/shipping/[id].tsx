@@ -1,15 +1,16 @@
 import type { ReactElement } from "react";
 
-import { NextPageWithLayout } from "../_app";
+import { NextPageWithLayout } from "../../_app";
 
 import MainLayout from "@/components/layouts/main";
-import AccountPage from "@/components/layouts/main/pages/Account/AccountPage";
+
+import AccountAddressesEditPage from "@/components/layouts/main/pages/Account/AccountAddressesEditPage";
 
 export const Account: NextPageWithLayout = () => {
-  return <AccountPage />;
+  return <AccountAddressesEditPage />;
 };
 
-Account.title = "Account: Shipping";
+Account.title = "Account Shipping: Edit";
 Account.getLayout = function getLayout(page: ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };

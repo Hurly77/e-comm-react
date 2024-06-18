@@ -9,7 +9,7 @@ export interface EShopBreadcrumbsProps {
 
 export default function EShopBreadcrumbs({ breadcrumbs }: EShopBreadcrumbsProps) {
   return (
-    <Breadcrumbs>
+    <Breadcrumbs size="lg">
       {breadcrumbs.map(({ label, href }) => (
         <BreadcrumbItem key={href} href={href}>
           {label}

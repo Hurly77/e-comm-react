@@ -17,39 +17,47 @@ export default function OrderItemList({ items }: { items: OrderItemModel[] }) {
     <div className="space-y-6 w-full">
       {items.map((item, idx) => (
         <>
-          <div key={item.id} className="flex gap-6 items-start">
+          <div key={item.id} className="flex flex-col gap-2 sm:gap-6 items-start">
             <Image
               radius="sm"
-              className="min-w-[110px]"
+              className="self-center"
               src={item.product.thumbnailUrl}
               alt={item.product.title}
-              width={110}
-              height={110}
+              width={125}
+              height={125}
             />
 
             <div className="w-full grow space-y-2 justify-between flex flex-col py-2">
-              <div className="flex justify-between items-start w-full text-lg">
-                <p className="font-medium">{item.product.title}</p>
+              <div className="flex flex-col sm:flex-row-reverse justify-between items-start w-full text-lg">
                 <span className="font-medium">{toUSD(item?.price)}</span>
+                <p className="font-medium line-clamp-2 sm:line-clamp-none">{item.product.title}</p>
               </div>
 
-              <p className="text-foreground-400 text max-w-4xl text-ellipsis line-clamp-2">
+              <p className="text-foreground-400 text max-w-4xl text-ellipsis line-clamp-2 hidden sm:block">
                 Return or Replace Items: Eligible through {formatDate(returnDate?.toISOString())}
               </p>
 
-              <div className="flex justify-between">
+              <div className="flex justify-between flex-col sm:flex-row">
                 <div className="">
                   <span className="text-foreground-400">Quantity:&nbsp;</span>
                   {item.quantity}
                 </div>
-                <div className="flex gap-x-2 font-medium">
-                  <Link underline="hover" href={`/products/${item.product.id}`}>
-                    <EyeIcon className="h-6 w-6" />
+                <div className="flex gap-x-2 sm:text-medium text-small font-medium whitespace-nowrap">
+                  <Link
+                    underline="hover"
+                    className="cursor-pointer text-sm sm:text-medium"
+                    href={`/products/${item.product.id}`}
+                  >
+                    <EyeIcon className="h-5 w-5 sm:h-6 sm:w-6 " />
                     &nbsp; View product
                   </Link>
                   <span className="text-primary">|</span>
-                  <Link underline="hover" className="cursor-pointer" onClick={() => onBuyAgain(item)}>
-                    <ArrowPathIcon className="h-5 w-5" />
+                  <Link
+                    underline="hover"
+                    className="cursor-pointer text-sm sm:text-medium"
+                    onClick={() => onBuyAgain(item)}
+                  >
+                    <ArrowPathIcon className="h-5 w-5 sm:h-6 sm:w-6 " />
                     &nbsp; Buy it again
                   </Link>
                 </div>

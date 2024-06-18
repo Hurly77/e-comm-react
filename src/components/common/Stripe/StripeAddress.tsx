@@ -1,15 +1,17 @@
 import React from "react";
 import { AddressElement } from "@stripe/react-stripe-js";
 import { Button, Checkbox } from "@nextui-org/react";
-import { DefaultValuesOption } from "@stripe/stripe-js";
+import { ContactOption, StripeAddressElementOptions } from "@stripe/stripe-js";
 import { StripeElementProps } from "./types";
 
 export interface StripeAddressT extends StripeElementProps {
-  defaultValues?: DefaultValuesOption;
+  integrated?: boolean;
+  defaultValues?: StripeAddressElementOptions["defaultValues"];
+  contacts?: ContactOption[];
 }
 
 export default function StripeAddress(props: StripeAddressT) {
-  const { onSubmit, onCancel, setToDefault, isLoading, btnText } = props;
+  const { onSubmit, onCancel, setToDefault, isLoading, btnText, contacts } = props;
 
   const [isReady, setIsReady] = React.useState(false);
 
@@ -20,6 +22,8 @@ export default function StripeAddress(props: StripeAddressT) {
         options={{
           mode: "billing",
           fields: { phone: "always" },
+          defaultValues: props.defaultValues,
+          contacts,
           validation: { phone: { required: "always" } },
           display: {
             name: "split",
@@ -37,7 +41,7 @@ export default function StripeAddress(props: StripeAddressT) {
           </Checkbox>
           <div className="flex items-center gap-4">
             <Button
-              isLoading={isLoading}
+              isDisabled={isLoading}
               onPress={onCancel}
               size="lg"
               radius="sm"
@@ -48,7 +52,14 @@ export default function StripeAddress(props: StripeAddressT) {
               Cancel
             </Button>
 
-            <Button size="lg" radius="sm" color="primary" type="submit" className="w-1/2 mt-4 font-medium max-h-11">
+            <Button
+              isLoading={isLoading}
+              size="lg"
+              radius="sm"
+              color="primary"
+              type="submit"
+              className="w-1/2 mt-4 font-medium max-h-11"
+            >
               {btnText || "Submit"}
             </Button>
           </div>
