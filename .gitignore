@@ -35,5 +35,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-src/pages/account/shipping/[id].tsx
-src/pages/account/shipping/index.tsx
