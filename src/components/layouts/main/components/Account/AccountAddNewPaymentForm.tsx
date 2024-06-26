@@ -94,7 +94,7 @@ export default function AccountAddNewPaymentForm({
         clientSecret,
         redirect: "if_required",
         confirmParams: {
-          return_url: `${location.hostname}/account/payments`,
+          return_url: `${process.env.NEXT_PUBLIC_ECOMM_STRIPE_REDIRECT_DOMAIN}/account/payments`,
           payment_method_data: { billing_details: billingDetails },
         },
       });

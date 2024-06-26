@@ -52,7 +52,7 @@ export default function CheckoutDrawer() {
       const { error } = await stripe.confirmPayment({
         clientSecret,
         confirmParams: {
-          return_url: "http://localhost:3000/checkout/status",
+          return_url: `${process.env.NEXT_PUBLIC_ECOMM_STRIPE_REDIRECT_DOMAIN ?? ""}/checkout/status`,
         },
       });
 
