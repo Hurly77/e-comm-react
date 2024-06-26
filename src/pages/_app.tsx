@@ -28,6 +28,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/svg+xml" href="/images/favicon.ico" />
         <title>{Component.title}</title>
       </Head>
 

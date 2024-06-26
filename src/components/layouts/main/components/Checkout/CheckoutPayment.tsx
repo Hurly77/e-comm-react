@@ -52,7 +52,7 @@ export default function CheckoutPayment() {
         clientSecret,
         redirect: "if_required",
         confirmParams: {
-          return_url: "http://localhost:3000/checkout",
+          return_url: `${process.env.NEXT_PUBLIC_ECOMM_STRIPE_REDIRECT_DOMAIN}/checkout`,
           payment_method_data: {
             billing_details,
           },
